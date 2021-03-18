@@ -1,0 +1,8 @@
+ - analysing the expression
+
+ - output to the user
+
+ - display truth table
+
+ - Read File
+    Get lines
