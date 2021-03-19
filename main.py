@@ -1,18 +1,40 @@
 import re
+import sys
+from pyparsing import *
+
+ParserElement.enablePackrat()
+sys.setrecursionlimit(3000)
 
 class checkExpression:
     def __init__(self, question):
         self.question = question
 
     def checkCorrectFormat(self):
-        pass
+        variable = oneOf(" A B C D")
+        formula = infixNotation(
+            variable,[
+                ("NOT", 1, opAssoc.RIGHT),
+                ("AND", 2, opAssoc.LEFT),
+                ("OR", 2, opAssoc.LEFT),
+                ("->", 2, opAssoc.LEFT),
+                ("<->", 2, opAssoc.LEFT),
+            ],
+        )
+        try:
+            res = formula.parseString(self.question, parseAll = True)
+            print(res)
+            self.res = res.asList().copy()
+        except ParseException:
+            print("Code not in right format")
+            return False
+        return True
 
     def checkNumberOfVariables(self):
         a = 0
         b = 0
         c = 0
         d = 0
-        for word in self.question.split():
+        for word in re.split("[() ]", self.question):
             if word == 'A' and a == 0:
                 a += 1
                 continue
@@ -32,23 +54,46 @@ class checkExpression:
 
     def checkAlphabet(self):
         # acceptable characters = (), A,B,C,D, OR, AND, NOT, -> , <->
-        alphabet = ['A', 'B', 'C', 'D', '(', ')', 'OR', 'NOT', 'AND', '->', '<->']
-        for c in self.question.split():
+        alphabet = ['A', 'B', 'C', 'D', '(', ')', 'OR', 'NOT', 'AND', '->', '<->', ""]
+        for c in re.split("[() ]", self.question):
             if c not in alphabet:
                 return False
         return True
 
     def run(self):
-        self.checkAlphabet()
-        self.checkNumberOfVariables()
+        if (self.checkAlphabet() and self.checkNumberOfVariables() and self.checkCorrectFormat()):
+            return True
+        return False
         
 
 class createExpression:
-    def __init(self):
-        pass
-
-    def convertInput(self):
-        pass
+    def __init__(self, formula):
+        self.formula = formula.res     
+    def traverse(self, o, tree_types=(list, tuple)):
+        if isinstance(o, tree_types):
+            for value in o:
+                if len(value) == 3 and value[1] == "->":
+                    value[1] = "OR"
+                    prev = value[0]
+                    value[0] = ["NOT", prev]
+                if len(value) == 3 and value[1] == "<->":
+                    value[1] = "OR"
+                    prev1 = value[0]
+                    prev2 = value[2]
+                    new1 = [["NOT", prev1], "AND", ["NOT", prev2]]
+                    new2 = [prev1 ,"AND", prev2]
+                    value[0] = new1
+                    value[2] = new2
+                for subvalue in self.traverse(value, tree_types):
+                    yield subvalue
+        else:
+            yield o
+    def run(self):
+        try:
+            return (list(self.traverse(self.formula)))
+        except:
+            print("Error")
+    
 
 class createTruthTable:
     def __init__(self):
@@ -71,6 +116,13 @@ class ReadFile:
     def addQuestions(self):
         pass
 
-test = checkExpression("")
-test.checkNumberOfVariables()
-print(test.variableNum)
+
+
+# ((NOT A) OR B) <-> ((B OR C) -> D)
+
+test = checkExpression("((NOT A) OR B) <-> C")
+print(test.run())
+test2 = createExpression(test)
+# test2.convertImplications()
+print(test2.run())
+print(test2.formula)

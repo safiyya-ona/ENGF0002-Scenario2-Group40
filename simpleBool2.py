@@ -34,7 +34,6 @@ class BoolOperand:
 
 class BoolBinOp:
     def __init__(self, t):
-        print(t)
         self.args = t[0][0::2]
         print(self.args)
 
@@ -106,7 +105,6 @@ if __name__ == "__main__":
         ("p or q or r", True),
         ("p or q or r and False", True),
         ("(p or q or r) and False", False),
-        ("p q r", True)
     ]
 
     print("p =", p)
@@ -114,6 +112,7 @@ if __name__ == "__main__":
     print("r =", r)
     print()
     for t, expected in tests:
-        res = boolExpr.parseString(t)[0]
+        res = boolExpr.parseString(t, parseAll=True)[0]
+        print(res)
         success = "PASS" if bool(res) == expected else "FAIL"
         print(t, "\n", res, "=", bool(res), "\n", success, "\n")

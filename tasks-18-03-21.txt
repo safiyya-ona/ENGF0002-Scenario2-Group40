@@ -7,3 +7,10 @@
  - Read File
     Get lines
 
+- expression
+   - (expr)
+   - A | B | C | D 
+   - NOT expr | expr binoperator expr
+
+- binoperator = AND, OR, -> , <->
+
