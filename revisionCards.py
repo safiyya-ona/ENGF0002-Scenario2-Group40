@@ -11,7 +11,7 @@ class App(QMainWindow):
         self.title = 'Revision Cards'
         self.setGeometry(50, 50, 1000, 600)
         backGround = self.palette()
-        backGround.setColor(self.backgroundRole(), QColor(15,102,102))
+        backGround.setColor(self.backgroundRole(), QColor(15, 102, 102))
         self.setPalette(backGround)
 
         self.table_widget = MyTableWidget(self)
@@ -21,7 +21,6 @@ class App(QMainWindow):
 
 
 class MyTableWidget(QWidget):
-
     def __init__(self, parent):
         super(QWidget, self).__init__(parent)
         self.layout = QVBoxLayout(self)

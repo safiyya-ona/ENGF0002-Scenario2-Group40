@@ -1,7 +1,7 @@
+import sys
 from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtGui import QColor, QFont
 from PyQt5.QtWidgets import * # QLabel, QLineEdit, QPushButton, QWidget, QVBoxLayout, QTableWidget, QTableWidgetItem
-
 
 # class TableModel(QtCore.QAbstractTableModel):
 #     def __init__(self, data):
@@ -43,7 +43,6 @@ from PyQt5.QtWidgets import * # QLabel, QLineEdit, QPushButton, QWidget, QVBoxLa
 #         self.tableWidget.setColumnCount(1)
 #         self.tableWidget.setItem(0, 0 , QTableWidgetItem("Hello"))
 #         self.tableWidget.move(300, 300)
-
 class TTFWindow(QtWidgets.QMainWindow):
     # def setupUI(self, TTOFrame):
     #     TTOFrame.setObjectName("Truth Table Filler")
@@ -125,3 +124,11 @@ class TTFWindow(QtWidgets.QMainWindow):
         # self.MainMenu = pyQt.Window()
         # self.MainMenu.show()
         self.hide()
+
+# def run():
+#     app = QtWidgets.QApplication(sys.argv)
+#     GUI = TTFWindow()
+#     GUI.show()
+#     sys.exit(app.exec_())
+#
+# run()

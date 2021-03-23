@@ -158,7 +158,12 @@ table = QTableView()
 table.setModel(filter_proxy_model)
 layout.addWidget(table)
 
-
+enter = QtWidgets.QPushButton()
+enter.clicked.connect(QtCore.QCoreApplication.instance().quit)
+enter.resize(100, 50)
+enter.move(500, 500)
+enter.setToolTip("<h3>Submit</h3>")
+enter.setStyleSheet("background: white; border:none;")
 
 def run():
     app = QtWidgets.QApplication(sys.argv)
