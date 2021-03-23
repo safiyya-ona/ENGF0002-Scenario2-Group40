@@ -29,8 +29,9 @@ class Window(QtWidgets.QMainWindow):
         self.TTOButton.clicked.connect(self.showTTF)
         self.TTOButton.resize(300, 300)
         self.TTOButton.move(100, 100)
-        self.TTOButton.setToolTip("<h3>Start the Session</h3>")
-        self.TTOButton.setStyleSheet("background-image: url('TTFButton.png'); border: none;")
+        self.TTOButton.setToolTip("<h3>Truth Table Filler</h3>")
+        self.TTOButton.setStyleSheet("background-image: url('TTFButton.png'); border:none;")
+
         # exButton = QtWidgets.QPushButton("Create Exercise", self)
         # # button.clicked.connect(QtCore.QCoreApplication.instance().quit)
         # exButton.resize(300, 300)
