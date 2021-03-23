@@ -7,11 +7,12 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QColor, QIcon, QPixmap, QFont
 from PyQt5.QtWidgets import QFileDialog, QLabel, QVBoxLayout
 import TruthTableGenerator
+import revisionCards
 
 class Window(QtWidgets.QMainWindow):
     def __init__(self):
         super(Window, self).__init__()
-        self.setGeometry(50, 50, 1000, 600)
+        self.setGeometry(50, 50, 1200, 700)
         self.setWindowTitle("Welcome to Truth Tables don't lie")
         backGround = self.palette()
         backGround.setColor(self.backgroundRole(), QColor(15,102,102))
@@ -20,7 +21,7 @@ class Window(QtWidgets.QMainWindow):
 
     def widgets(self):
         title = QLabel("Welcome to Truth Tables don't lie", self)
-        title.move(200, 30)
+        title.move(300, 30)
         title.setFont(QFont('Times', 20))
         title.setStyleSheet("color: white;")
         title.adjustSize()
@@ -28,20 +29,21 @@ class Window(QtWidgets.QMainWindow):
         self.TTOButton = QtWidgets.QPushButton(self)
         self.TTOButton.clicked.connect(self.showTTF)
         self.TTOButton.resize(300, 300)
-        self.TTOButton.move(100, 100)
+        self.TTOButton.move(100, 130)
         self.TTOButton.setToolTip("<h3>Truth Table Filler</h3>")
         self.TTOButton.setStyleSheet("background-image: url('TTFButton.png'); border:none;")
 
-        # exButton = QtWidgets.QPushButton("Create Exercise", self)
-        # # button.clicked.connect(QtCore.QCoreApplication.instance().quit)
-        # exButton.resize(300, 300)
-        # exButton.move(450, 100)
-        # exButton.setStyleSheet("background-color: white;")
+        revCards = QtWidgets.QPushButton("Create Exercise", self)
+        revCards.clicked.connect(self.showRevCardsFrame)
+        revCards.resize(300, 300)
+        revCards.move(450, 130)
+        self.TTOButton.setToolTip("<h3>Revise Truth Tables</h3>")
+        revCards.setStyleSheet("background-color: white;")
 
         fileChooser = QtWidgets.QPushButton(self)
         fileChooser.clicked.connect(self.getfile)
         fileChooser.resize(300, 300)
-        fileChooser.move(600, 100)
+        fileChooser.move(800, 130)
         fileChooser.setToolTip("<h3>Create Exercise</h3>")
         fileChooser.setStyleSheet("background-image: url('ExerciseButton.png'); border: none;")
 
@@ -61,6 +63,10 @@ class Window(QtWidgets.QMainWindow):
         self.TTF = TruthTableGenerator.TTFWindow()
         self.TTF.show()
         #self.hide()
+
+    def showRevCardsFrame(self):
+        self.RevCards = revisionCards.RevCards()
+        self.RevCards.show()
 
     # def getfiles(self):
     #     dialogue = QFileDialog()

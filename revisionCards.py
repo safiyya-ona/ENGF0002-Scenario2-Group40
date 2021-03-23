@@ -1,12 +1,11 @@
 import sys
-from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QWidget, QAction, QTabWidget, QVBoxLayout
+#from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QWidget, QAction, QTabWidget, QVBoxLayout
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 
-
-class App(QMainWindow):
+class RevCards(QMainWindow):
 
     def __init__(self):
         super().__init__()
@@ -15,11 +14,34 @@ class App(QMainWindow):
         backGround = self.palette()
         backGround.setColor(self.backgroundRole(), QColor(15, 102, 102))
         self.setPalette(backGround)
-
+        self.setMenuWidget(self.returnButton())
         self.table_widget = MyTableWidget(self)
         self.setCentralWidget(self.table_widget)
 
         self.show()
+
+    def returnButton(self):
+        self.menuWidget = QWidget(self)
+        self.menuWidgetLayout = QGridLayout(self.menuWidget)
+        self.menuWidget.setLayout(self.menuWidgetLayout)
+
+        returnButton = QPushButton('', self)
+        returnButton.clicked.connect(self.returnMainMenu)
+        returnButton.resize(100, 100)
+        returnButton.move(20, 20)
+        returnButton.setToolTip("<h3>Return to Main Menu</h3>")
+        returnButton.setStyleSheet(""
+                                   "QPushButton { background-image: url('return.png'); border: none; }"
+                                   "QToolTip { color: #000000; background-color:#ffffff ; border: 0px; }")
+        self.menuWidgetLayout.addWidget(returnButton, 20, 20, 1 , 1)
+
+
+
+    def returnMainMenu(self):
+        print("return")
+        # self.MainMenu = pyQt.Window()
+        # self.MainMenu.show()
+        self.hide()
 
 
 class MyTableWidget(QWidget):
@@ -85,5 +107,5 @@ class MyTableWidget(QWidget):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = App()
+    ex = RevCards()
     sys.exit(app.exec_())
