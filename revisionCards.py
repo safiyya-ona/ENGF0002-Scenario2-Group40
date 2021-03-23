@@ -1,7 +1,9 @@
 import sys
 from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QWidget, QAction, QTabWidget, QVBoxLayout
+from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import *
-from PyQt5.QtCore import pyqtSlot
+from PyQt5.QtCore import *
+from PyQt5.QtWidgets import *
 
 
 class App(QMainWindow):
@@ -41,19 +43,44 @@ class MyTableWidget(QWidget):
 
         # Create first tab
         self.tab1.layout = QVBoxLayout(self)
-        self.pushButton1 = QPushButton("PyQt5 button")
-        self.tab1.layout.addWidget(self.pushButton1)
+        self.label = QLabel(self)
+        pixmap = QPixmap('A AND B.png')
+        self.resized = pixmap.scaled(800, 400, QtCore.Qt.KeepAspectRatio)
+        self.label.setPixmap(self.resized)
+        self.label.setAlignment(Qt.AlignCenter)
+        self.tab1.layout.addWidget(self.label)
         self.tab1.setLayout(self.tab1.layout)
+
+        self.tab2.layout = QVBoxLayout(self)
+        self.label = QLabel(self)
+        pixmap = QPixmap('A AND B.png')
+        self.resized = pixmap.scaled(800, 400, QtCore.Qt.KeepAspectRatio)
+        self.label.setPixmap(self.resized)
+        self.label.setAlignment(Qt.AlignCenter)
+        self.tab2.layout.addWidget(self.label)
+        self.tab2.setLayout(self.tab2.layout)
+
+        self.tab3.layout = QVBoxLayout(self)
+        self.label = QLabel(self)
+        pixmap = QPixmap('A AND B.png')
+        self.resized = pixmap.scaled(800, 400, QtCore.Qt.KeepAspectRatio)
+        self.label.setPixmap(self.resized)
+        self.label.setAlignment(Qt.AlignCenter)
+        self.tab3.layout.addWidget(self.label)
+        self.tab3.setLayout(self.tab3.layout)
+
+        self.tab4.layout = QVBoxLayout(self)
+        self.label = QLabel(self)
+        pixmap = QPixmap('return.png')
+        self.resized = pixmap.scaled(800, 400, QtCore.Qt.KeepAspectRatio)
+        self.label.setPixmap(self.resized)
+        self.label.setAlignment(Qt.AlignCenter)
+        self.tab4.layout.addWidget(self.label)
+        self.tab4.setLayout(self.tab4.layout)
 
         # Add tabs to widget
         self.layout.addWidget(self.tabs)
         self.setLayout(self.layout)
-
-    @pyqtSlot()
-    def on_click(self):
-        print("\n")
-        for currentQTableWidgetItem in self.tableWidget.selectedItems():
-            print(currentQTableWidgetItem.row(), currentQTableWidgetItem.column(), currentQTableWidgetItem.text())
 
 
 if __name__ == '__main__':

@@ -1,7 +1,7 @@
 import sys
 from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtGui import QColor, QFont
-from PyQt5.QtWidgets import * # QLabel, QLineEdit, QPushButton, QWidget, QVBoxLayout, QTableWidget, QTableWidgetItem
+from PyQt5.QtWidgets import *
 
 # class TableModel(QtCore.QAbstractTableModel):
 #     def __init__(self, data):
