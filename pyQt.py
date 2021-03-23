@@ -6,7 +6,6 @@ import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QColor, QIcon, QPixmap, QFont
 from PyQt5.QtWidgets import QFileDialog, QLabel, QVBoxLayout
-#from TruthTableGenerator import TruthTableFiller
 import TruthTableGenerator
 
 class Window(QtWidgets.QMainWindow):
