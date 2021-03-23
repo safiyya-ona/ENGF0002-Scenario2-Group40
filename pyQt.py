@@ -31,7 +31,7 @@ class Window(QtWidgets.QMainWindow):
         self.TTOButton.resize(300, 300)
         self.TTOButton.move(100, 100)
         self.TTOButton.setToolTip("<h3>Start the Session</h3>")
-        self.TTOButton.setStyleSheet("background-image: url('icon.png'); border: none;")
+        self.TTOButton.setStyleSheet("background-image: url('TTFButton.png'); border: none;")
         # exButton = QtWidgets.QPushButton("Create Exercise", self)
         # # button.clicked.connect(QtCore.QCoreApplication.instance().quit)
         # exButton.resize(300, 300)
@@ -43,7 +43,7 @@ class Window(QtWidgets.QMainWindow):
         fileChooser.resize(300, 300)
         fileChooser.move(600, 100)
         fileChooser.setToolTip("<h3>Create Exercise</h3>")
-        fileChooser.setStyleSheet("background-image: url('createexercise.png'); border: none;")
+        fileChooser.setStyleSheet("background-image: url('ExerciseButton.png'); border: none;")
 
         self.show()
 
@@ -60,7 +60,7 @@ class Window(QtWidgets.QMainWindow):
     def showTTF(self):
         self.TTF = TruthTableGenerator.TTFWindow()
         self.TTF.show()
-        self.hide()
+        #self.hide()
 
     # def getfiles(self):
     #     dialogue = QFileDialog()
