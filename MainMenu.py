@@ -9,6 +9,7 @@ from PyQt5.QtWidgets import QFileDialog, QLabel, QVBoxLayout
 import TruthTableGenerator
 import revisionCards
 
+
 class Window(QtWidgets.QMainWindow):
     def __init__(self):
         super(Window, self).__init__()
