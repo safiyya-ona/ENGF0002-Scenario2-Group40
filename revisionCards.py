@@ -49,7 +49,7 @@ class MyTableWidget(QWidget):
         self.tab3 = QWidget()
         self.tab4 = QWidget()
         self.tab5 = QWidget()
-        self.tabs.resize(300, 200)
+        self.tabs.resize(0, 0)
 
         # Add tabs
         self.tabs.addTab(self.tab1, "A OR B")

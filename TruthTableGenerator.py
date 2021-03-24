@@ -1,6 +1,8 @@
+# https://www.youtube.com/watch?v=ECIZgWeyFFk&ab_channel=ParwizForogh
+
 import sys
-from PyQt5 import QtWidgets, QtGui, QtCore
-from PyQt5.QtGui import QColor, QFont
+from PyQt5 import QtGui, QtCore
+from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
 # class TableModel(QtCore.QAbstractTableModel):
@@ -43,7 +45,7 @@ from PyQt5.QtWidgets import *
 #         self.tableWidget.setColumnCount(1)
 #         self.tableWidget.setItem(0, 0 , QTableWidgetItem("Hello"))
 #         self.tableWidget.move(300, 300)
-class TTFWindow(QtWidgets.QMainWindow):
+class TTFWindow(QDialog):
     def __init__(self):
         super(TTFWindow, self).__init__()
         self.setGeometry(50, 50, 1200, 700)
@@ -52,26 +54,30 @@ class TTFWindow(QtWidgets.QMainWindow):
         backGround.setColor(self.backgroundRole(), QColor(15, 102, 102))
         self.setPalette(backGround)
 
-        self.table_widget = MyTableWidget(self)
-        self.setCentralWidget(self.table_widget)
+        # self.table_widget = MyTableWidget(self)
+        # self.setCentralWidget(self.truthTable())
         self.widgets()
         self.show()
 
     def widgets(self):
+        vbox = QGridLayout()
+        vbox.setSpacing(20)
         title = QLabel("Truth Table Filler", self)
         title.move(400, 30)
         title.setFont(QFont('Times', 25))
         title.setStyleSheet("color: white;")
         title.adjustSize()
+        vbox.addWidget(title, 1, 1)
 
         self.equationLabel = QLabel('Equation:', self)
         self.equationLabel.move(245, 132)
         self.equationLabel.setFont(QFont('Times', 12))
         self.equationLabel.setStyleSheet("color: white;")
+        vbox.addWidget(self.equationLabel, 2, 0)
         self.textEditor = QLineEdit(self)
-
         self.textEditor.move(350, 130)
         self.textEditor.resize(450, 40)
+        vbox.addWidget(self.textEditor, 2, 1)
 
         enter = QPushButton('ENTER', self)
         enter.clicked.connect(self.sendEquation)
@@ -79,6 +85,22 @@ class TTFWindow(QtWidgets.QMainWindow):
         enter.move(820, 130)
         enter.setToolTip("<h3>Enter Equation</h3>")
         enter.setStyleSheet("background: green;")
+        vbox.addWidget(enter, 2, 2)
+
+
+
+    # def truthTable(self):
+
+        table = QTableWidget()
+        table.resize(300,400)
+        table.setRowCount(4)
+        table.setColumnCount(3)
+        tableValues = [[0, 0, 0], [0, 1, 1], [1, 0, 1], [1, 1, 1]]
+        for row in range(0, len(tableValues)):
+            for colVal in range(0, len(tableValues[row])):
+                table.setItem(row, colVal, QTableWidgetItem(tableValues[row][colVal]))
+        table.move(300, 400)
+        vbox.addWidget(table, 3, 1)
 
         returnButton = QPushButton('', self)
         returnButton.clicked.connect(self.returnMainMenu)
@@ -88,31 +110,14 @@ class TTFWindow(QtWidgets.QMainWindow):
         returnButton.setStyleSheet(""
                                    "QPushButton { background-image: url('return.png'); border: none; }"
                                    "QToolTip { color: #000000; background-color:#ffffff ; border: 0px; }")
+        vbox.addWidget(returnButton, 4, 0)
 
-        model = QtGui.QStandardItemModel(5, 3)
-        model.setHorizontalHeaderLabels(['ID', 'DATE', 'VALUE'])
-        for row, text in enumerate(['Cell', 'Fish', 'Apple', 'Ananas', 'Mango']):
-            item = QtGui.QStandardItem(text)
-            model.setItem(row, 2, item)
+        self.setLayout(vbox)
 
-        # table view
-        # table = QtGui.QTableView()
-        # table.setModel(model)
-        # layout.addWidget(table)
-
-        # self.table = QtWidgets.QTableView()
-        #
-        # data = [[0, 0, 0], [1, 0, 1], [0, 1, 1], [1, 1, 1]] # ["A", "B", "A V B"],
-        #
-        # self.model = TableModel(data)
-        # self.table.setModel(self.model)
-        #
-        # self.setCentralWidget(self.table)
-
-        self.show()
 
     def sendEquation(self):
         print(self.textEditor.text())
+
 
     def returnMainMenu(self):
         print("return")
@@ -130,7 +135,7 @@ class MyTableWidget(QWidget):
         model.setHorizontalHeaderLabels(['A', 'B', 'A V B'])
         for row, text in enumerate([0, 0, 0, 1]):
             item = QtGui.QStandardItem(text)
-            model.setItem(row, 1, item)
+            model.setItem(0, row, item)
         for row, text in enumerate(['Cell', 'Fish', 'Apple', 'Ananas']):
             item = QtGui.QStandardItem(text)
             model.setItem(row, 2, item)
@@ -138,7 +143,7 @@ class MyTableWidget(QWidget):
         # filter proxy model
         filter_proxy_model = QtCore.QSortFilterProxyModel()
         filter_proxy_model.setSourceModel(model)
-        filter_proxy_model.setFilterKeyColumn(2)  # third column
+        #filter_proxy_model.setFilterKeyColumn(2)  # third column
         #layout = QVBoxLayout(window)
         # line_edit = QLineEdit()
         # line_edit.textChanged.connect(filter_proxy_model.setFilterRegExp)
@@ -150,7 +155,7 @@ class MyTableWidget(QWidget):
         #layout.addWidget(table)
 
         # Add tabs to widget
-        self.layout.addWidget(table, 2, 2, 1, 1)
+        self.layout.addWidget(table, 50, 2, 3, 4)
         self.setLayout(self.layout)
 
 # def run():
