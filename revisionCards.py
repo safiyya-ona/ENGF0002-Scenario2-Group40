@@ -1,12 +1,10 @@
 import sys
-#from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QWidget, QAction, QTabWidget, QVBoxLayout
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 
 class RevCards(QMainWindow):
-
     def __init__(self):
         super().__init__()
         self.title = 'Revision Cards'
@@ -33,13 +31,11 @@ class RevCards(QMainWindow):
                                    "QPushButton { background-image: url('return.png'); border: none; }"
                                    "QToolTip { color: #000000; background-color:#ffffff ; border: 0px; }")
 
-
     def returnMainMenu(self):
         print("return")
         # self.MainMenu = pyQt.Window()
         # self.MainMenu.show()
         self.hide()
-
 
 class MyTableWidget(QWidget):
     def __init__(self, parent):
@@ -52,6 +48,7 @@ class MyTableWidget(QWidget):
         self.tab2 = QWidget()
         self.tab3 = QWidget()
         self.tab4 = QWidget()
+        self.tab5 = QWidget()
         self.tabs.resize(300, 200)
 
         # Add tabs
@@ -59,11 +56,12 @@ class MyTableWidget(QWidget):
         self.tabs.addTab(self.tab2, "A AND B")
         self.tabs.addTab(self.tab3, "A -> B")
         self.tabs.addTab(self.tab4, "A <-> B")
+        self.tabs.addTab(self.tab5, "NOT A")
 
         # Create first tab
         self.tab1.layout = QVBoxLayout(self)
         self.label = QLabel(self)
-        pixmap = QPixmap('A AND B.png')
+        pixmap = QPixmap('AORB.png')
         self.resized = pixmap.scaled(800, 400, QtCore.Qt.KeepAspectRatio)
         self.label.setPixmap(self.resized)
         self.label.setAlignment(Qt.AlignCenter)
@@ -72,7 +70,7 @@ class MyTableWidget(QWidget):
 
         self.tab2.layout = QVBoxLayout(self)
         self.label = QLabel(self)
-        pixmap = QPixmap('A AND B.png')
+        pixmap = QPixmap('AANDB.png')
         self.resized = pixmap.scaled(800, 400, QtCore.Qt.KeepAspectRatio)
         self.label.setPixmap(self.resized)
         self.label.setAlignment(Qt.AlignCenter)
@@ -81,7 +79,7 @@ class MyTableWidget(QWidget):
 
         self.tab3.layout = QVBoxLayout(self)
         self.label = QLabel(self)
-        pixmap = QPixmap('A AND B.png')
+        pixmap = QPixmap('AIMPLYB.png')
         self.resized = pixmap.scaled(800, 400, QtCore.Qt.KeepAspectRatio)
         self.label.setPixmap(self.resized)
         self.label.setAlignment(Qt.AlignCenter)
@@ -90,12 +88,21 @@ class MyTableWidget(QWidget):
 
         self.tab4.layout = QVBoxLayout(self)
         self.label = QLabel(self)
-        pixmap = QPixmap('return.png')
+        pixmap = QPixmap('AARROWSB.png')
         self.resized = pixmap.scaled(800, 400, QtCore.Qt.KeepAspectRatio)
         self.label.setPixmap(self.resized)
         self.label.setAlignment(Qt.AlignCenter)
         self.tab4.layout.addWidget(self.label)
         self.tab4.setLayout(self.tab4.layout)
+
+        self.tab5.layout = QVBoxLayout(self)
+        self.label = QLabel(self)
+        pixmap = QPixmap('notA.png')
+        self.resized = pixmap.scaled(800, 400, QtCore.Qt.KeepAspectRatio)
+        self.label.setPixmap(self.resized)
+        self.label.setAlignment(Qt.AlignCenter)
+        self.tab5.layout.addWidget(self.label)
+        self.tab5.setLayout(self.tab5.layout)
 
         # Add tabs to widget
         self.layout.addWidget(self.tabs)

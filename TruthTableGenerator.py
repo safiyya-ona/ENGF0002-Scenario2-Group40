@@ -44,8 +44,6 @@ from PyQt5.QtWidgets import *
 #         self.tableWidget.setItem(0, 0 , QTableWidgetItem("Hello"))
 #         self.tableWidget.move(300, 300)
 class TTFWindow(QtWidgets.QMainWindow):
-    # def setupUI(self, TTOFrame):
-    #     TTOFrame.setObjectName("Truth Table Filler")
     def __init__(self):
         super(TTFWindow, self).__init__()
         self.setGeometry(50, 50, 1200, 700)
@@ -53,14 +51,11 @@ class TTFWindow(QtWidgets.QMainWindow):
         backGround = self.palette()
         backGround.setColor(self.backgroundRole(), QColor(15, 102, 102))
         self.setPalette(backGround)
-        # self.table_widget = MyTable()
-        #
-        # self.widget = QWidget(self)
-        # layout = QGridLayout()
-        # self.widget.setLayout(layout)
-        # layout.addWidget(self.table_widget)
-        # self.setCentralWidget(self.widget)
+
+        self.table_widget = MyTableWidget(self)
+        self.setCentralWidget(self.table_widget)
         self.widgets()
+        self.show()
 
     def widgets(self):
         title = QLabel("Truth Table Filler", self)
@@ -124,6 +119,39 @@ class TTFWindow(QtWidgets.QMainWindow):
         # self.MainMenu = pyQt.Window()
         # self.MainMenu.show()
         self.hide()
+
+class MyTableWidget(QWidget):
+    def __init__(self, parent):
+        super(QWidget, self).__init__(parent)
+        self.layout = QGridLayout(self)
+
+        # standard item model
+        model = QtGui.QStandardItemModel(4, 3)
+        model.setHorizontalHeaderLabels(['A', 'B', 'A V B'])
+        for row, text in enumerate([0, 0, 0, 1]):
+            item = QtGui.QStandardItem(text)
+            model.setItem(row, 1, item)
+        for row, text in enumerate(['Cell', 'Fish', 'Apple', 'Ananas']):
+            item = QtGui.QStandardItem(text)
+            model.setItem(row, 2, item)
+
+        # filter proxy model
+        filter_proxy_model = QtCore.QSortFilterProxyModel()
+        filter_proxy_model.setSourceModel(model)
+        filter_proxy_model.setFilterKeyColumn(2)  # third column
+        #layout = QVBoxLayout(window)
+        # line_edit = QLineEdit()
+        # line_edit.textChanged.connect(filter_proxy_model.setFilterRegExp)
+        # layout.addWidget(line_edit)
+
+        # table view
+        table = QTableView()
+        table.setModel(filter_proxy_model)
+        #layout.addWidget(table)
+
+        # Add tabs to widget
+        self.layout.addWidget(table, 2, 2, 1, 1)
+        self.setLayout(self.layout)
 
 # def run():
 #     app = QtWidgets.QApplication(sys.argv)
