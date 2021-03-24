@@ -10,31 +10,28 @@ class RevCards(QMainWindow):
     def __init__(self):
         super().__init__()
         self.title = 'Revision Cards'
-        self.setGeometry(50, 50, 1000, 600)
+        self.setGeometry(50, 50, 1200, 700)
         backGround = self.palette()
         backGround.setColor(self.backgroundRole(), QColor(15, 102, 102))
         self.setPalette(backGround)
         self.setMenuWidget(self.returnButton())
         self.table_widget = MyTableWidget(self)
         self.setCentralWidget(self.table_widget)
-
-        self.show()
-
-    def returnButton(self):
         self.menuWidget = QWidget(self)
         self.menuWidgetLayout = QGridLayout(self.menuWidget)
         self.menuWidget.setLayout(self.menuWidgetLayout)
+        self.menuWidgetLayout.addWidget(self.returnButton(), 1180, 680, 1, 1)
+        self.show()
 
+    def returnButton(self):
         returnButton = QPushButton('', self)
         returnButton.clicked.connect(self.returnMainMenu)
         returnButton.resize(100, 100)
-        returnButton.move(20, 20)
+        returnButton.move(20, 580)
         returnButton.setToolTip("<h3>Return to Main Menu</h3>")
         returnButton.setStyleSheet(""
                                    "QPushButton { background-image: url('return.png'); border: none; }"
                                    "QToolTip { color: #000000; background-color:#ffffff ; border: 0px; }")
-        self.menuWidgetLayout.addWidget(returnButton, 20, 20, 1 , 1)
-
 
 
     def returnMainMenu(self):

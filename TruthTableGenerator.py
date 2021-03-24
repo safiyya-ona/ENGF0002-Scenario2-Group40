@@ -83,12 +83,12 @@ class TTFWindow(QtWidgets.QMainWindow):
         enter.resize(80, 40)
         enter.move(820, 130)
         enter.setToolTip("<h3>Enter Equation</h3>")
-        enter.setStyleSheet("background: white;")
+        enter.setStyleSheet("background: green;")
 
         returnButton = QPushButton('', self)
         returnButton.clicked.connect(self.returnMainMenu)
         returnButton.resize(100, 100)
-        returnButton.move(20, 20)
+        returnButton.move(20, 580)
         returnButton.setToolTip("<h3>Return to Main Menu</h3>")
         returnButton.setStyleSheet(""
                                    "QPushButton { background-image: url('return.png'); border: none; }"

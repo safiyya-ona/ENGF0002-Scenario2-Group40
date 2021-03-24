@@ -136,9 +136,12 @@ app = QtWidgets.QApplication([])
 window = QtWidgets.QWidget()
 
 # standard item model
-model = QtGui.QStandardItemModel(5, 3)
+model = QtGui.QStandardItemModel(4, 3)
 model.setHorizontalHeaderLabels(['A', 'B', 'A V B'])
-for row, text in enumerate(['Cell', 'Fish', 'Apple', 'Ananas', 'Mango']):
+for row, text in enumerate([0,0,0,1]):
+    item = QtGui.QStandardItem(text)
+    model.setItem(row, 1, item)
+for row, text in enumerate(['Cell', 'Fish', 'Apple', 'Ananas']):
     item = QtGui.QStandardItem(text)
     model.setItem(row, 2, item)
 
