@@ -61,20 +61,6 @@ class Window(QtWidgets.QMainWindow):
         self.RevCards = revisionCards.RevCards()
         self.RevCards.show()
 
-    # def getfiles(self):
-    #     dialogue = QFileDialog()
-    #     dialogue.setFileMode(QFileDialog.AnyFile)
-    #     dialogue.setFilter("Text files (*.txt)")
-    #     filenames = QtCore.QStringList()
-    #
-    #     if dialogue.exec_():
-    #         filenames = dialogue.selectedFiles()
-    #         f = open(filenames[0], 'r')
-    #
-    #         with f:
-    #             data = f.read()
-    #             self.contents.setText(data)
-
 def run():
     app = QtWidgets.QApplication(sys.argv)
     GUI = Window()

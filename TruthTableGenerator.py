@@ -1,10 +1,8 @@
 # https://www.youtube.com/watch?v=ECIZgWeyFFk&ab_channel=ParwizForogh
 
-import sys
-from PyQt5 import QtGui, QtCore
+from PyQt5 import QtWidgets
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-
 # class TableModel(QtCore.QAbstractTableModel):
 #     def __init__(self, data):
 #         super(TableModel, self).__init__()
@@ -76,31 +74,16 @@ class TTFWindow(QDialog):
         vbox.addWidget(self.equationLabel, 2, 0)
         self.textEditor = QLineEdit(self)
         self.textEditor.move(350, 130)
-        self.textEditor.resize(450, 40)
+        self.textEditor.resize(400, 40)
         vbox.addWidget(self.textEditor, 2, 1)
 
-        enter = QPushButton('ENTER', self)
+        enter = QPushButton('SUBMIT', self)
         enter.clicked.connect(self.sendEquation)
         enter.resize(80, 40)
         enter.move(820, 130)
         enter.setToolTip("<h3>Enter Equation</h3>")
         enter.setStyleSheet("background: green;")
-        vbox.addWidget(enter, 2, 2)
-
-
-
-    # def truthTable(self):
-
-        table = QTableWidget()
-        table.resize(300,400)
-        table.setRowCount(4)
-        table.setColumnCount(3)
-        tableValues = [[0, 0, 0], [0, 1, 1], [1, 0, 1], [1, 1, 1]]
-        for row in range(0, len(tableValues)):
-            for colVal in range(0, len(tableValues[row])):
-                table.setItem(row, colVal, QTableWidgetItem(tableValues[row][colVal]))
-        table.move(300, 400)
-        vbox.addWidget(table, 3, 1)
+        vbox.addWidget(enter, 4, 2)
 
         returnButton = QPushButton('', self)
         returnButton.clicked.connect(self.returnMainMenu)
@@ -112,12 +95,29 @@ class TTFWindow(QDialog):
                                    "QToolTip { color: #000000; background-color:#ffffff ; border: 0px; }")
         vbox.addWidget(returnButton, 4, 0)
 
-        self.setLayout(vbox)
+        table = self.setupTable(4, 3)
+        vbox.addWidget(table, 3, 1)
 
+        self.setLayout(vbox)
 
     def sendEquation(self):
         print(self.textEditor.text())
 
+    def getTableData(self):
+        table = [[0, 0, 0], [0, 1, 1], [1, 0, 1], [1, 1, 1]]
+        return table
+
+    def setupTable(self, rows, columns):
+        table = QTableWidget()
+        table.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
+        table.setHorizontalHeaderLabels(["A", "B", "A OR B"])
+        table.setRowCount(rows)
+        table.setColumnCount(columns)
+        tableValues = self.getTableData()
+        for row in range(0, len(tableValues)):
+            for colVal in range(0, len(tableValues[row])):
+                table.setItem(row, colVal, QTableWidgetItem(str(tableValues[row][colVal])))
+        return table
 
     def returnMainMenu(self):
         print("return")
@@ -125,38 +125,38 @@ class TTFWindow(QDialog):
         # self.MainMenu.show()
         self.hide()
 
-class MyTableWidget(QWidget):
-    def __init__(self, parent):
-        super(QWidget, self).__init__(parent)
-        self.layout = QGridLayout(self)
-
-        # standard item model
-        model = QtGui.QStandardItemModel(4, 3)
-        model.setHorizontalHeaderLabels(['A', 'B', 'A V B'])
-        for row, text in enumerate([0, 0, 0, 1]):
-            item = QtGui.QStandardItem(text)
-            model.setItem(0, row, item)
-        for row, text in enumerate(['Cell', 'Fish', 'Apple', 'Ananas']):
-            item = QtGui.QStandardItem(text)
-            model.setItem(row, 2, item)
-
-        # filter proxy model
-        filter_proxy_model = QtCore.QSortFilterProxyModel()
-        filter_proxy_model.setSourceModel(model)
-        #filter_proxy_model.setFilterKeyColumn(2)  # third column
-        #layout = QVBoxLayout(window)
-        # line_edit = QLineEdit()
-        # line_edit.textChanged.connect(filter_proxy_model.setFilterRegExp)
-        # layout.addWidget(line_edit)
-
-        # table view
-        table = QTableView()
-        table.setModel(filter_proxy_model)
-        #layout.addWidget(table)
-
-        # Add tabs to widget
-        self.layout.addWidget(table, 50, 2, 3, 4)
-        self.setLayout(self.layout)
+# class MyTableWidget(QWidget):
+#     def __init__(self, parent):
+#         super(QWidget, self).__init__(parent)
+#         self.layout = QGridLayout(self)
+#
+#         # standard item model
+#         model = QtGui.QStandardItemModel(4, 3)
+#         model.setHorizontalHeaderLabels(['A', 'B', 'A V B'])
+#         for row, text in enumerate([0, 0, 0, 1]):
+#             item = QtGui.QStandardItem(text)
+#             model.setItem(0, row, item)
+#         for row, text in enumerate(['Cell', 'Fish', 'Apple', 'Ananas']):
+#             item = QtGui.QStandardItem(text)
+#             model.setItem(row, 2, item)
+#
+#         # filter proxy model
+#         filter_proxy_model = QtCore.QSortFilterProxyModel()
+#         filter_proxy_model.setSourceModel(model)
+#         #filter_proxy_model.setFilterKeyColumn(2)  # third column
+#         #layout = QVBoxLayout(window)
+#         # line_edit = QLineEdit()
+#         # line_edit.textChanged.connect(filter_proxy_model.setFilterRegExp)
+#         # layout.addWidget(line_edit)
+#
+#         # table view
+#         table = QTableView()
+#         table.setModel(filter_proxy_model)
+#         #layout.addWidget(table)
+#
+#         # Add tabs to widget
+#         self.layout.addWidget(table, 50, 2, 3, 4)
+#         self.setLayout(self.layout)
 
 # def run():
 #     app = QtWidgets.QApplication(sys.argv)

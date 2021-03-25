@@ -173,7 +173,7 @@
 #
 # run()
 import sys
-from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QWidget, QAction, QTabWidget, QVBoxLayout
+from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QWidget, QTabWidget, QVBoxLayout
 from PyQt5.QtGui import *
 from PyQt5.QtCore import pyqtSlot
 
