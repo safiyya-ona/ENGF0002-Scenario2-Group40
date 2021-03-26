@@ -1,0 +1,10 @@
+ - connect code_body
+ - exercise creation 
+    read each line
+        if line faulty:
+            throw expection faulty line edit your own file
+
+- get questions from file
+    one large file with all loaded questions
+    folder of files with questions
+        choose random file and question to load
