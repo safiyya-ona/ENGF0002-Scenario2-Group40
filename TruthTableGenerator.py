@@ -94,14 +94,13 @@ class TTFWindow(QDialog):
         returnButton.setStyleSheet(""
                                    "QPushButton { background-image: url('return.png'); border: none; }"
                                    "QToolTip { color: #000000; background-color:#ffffff ; border: 0px; }")
-        if not self.getTableData():
-            tableCol = 3
-            tableRows = 4
-        else:
-            tableCol = len(self.getTableData()[1])
-            tableRows = len(self.getTableData())
-        table = self.setupTable(tableRows, tableCol)
-        print(tableCol, tableRows)
+        # if not self.getTableData():
+        #     tableCol = 3
+        #     tableRows = 4
+        # else:
+        #     tableCol = len(self.getTableData()[1])
+        #     tableRows = len(self.getTableData())
+        table = self.setupTable(self.getTableData())
         vbox.addWidget(table, 3, 1)
         self.setLayout(vbox)
 
@@ -109,21 +108,26 @@ class TTFWindow(QDialog):
         print(self.textEditor.text())
 
     def getTableData(self):
-        table = []#[['A', 'B', 'A OR B'], [0, 0, 0], [0, 1, 1], [1, 0, 1], [1, 1, 1]] # function(self.textEditor.text())
+        table = [['A', 'B', 'A OR B'], [0, 0, 0], [0, 1, 1], [1, 0, 1], [1, 1, 1]] # function(self.textEditor.text())
         return table
 
-    def setupTable(self, rows, columns):
+    def setupTable(self, tableVals):
         table = QTableWidget()
         table.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
         table.verticalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
         table.horizontalHeader().setVisible(False)
         table.verticalHeader().setVisible(False)
-        table.setRowCount(rows)
-        table.setColumnCount(columns)
-        tableValues = self.getTableData()
-        for row in range(0, len(tableValues)):
-            for colVal in range(0, len(tableValues[row])):
-                table.setItem(row, colVal, QTableWidgetItem(str(tableValues[row][colVal])))
+        if not tableVals:
+            table.setRowCount(5)
+            table.setColumnCount(3)
+        else:
+            table.setRowCount(len(tableVals))
+            table.setColumnCount(len(tableVals[0]))
+            tableValues = self.getTableData()
+            for row in range(0, len(tableValues)):
+                for colVal in range(0, len(tableValues[row])):
+                    table.setItem(row, colVal, QTableWidgetItem(str(tableValues[row][colVal])))
+                    print((table.item(row, colVal)).text())
         return table
 
     def returnMainMenu(self):
