@@ -94,8 +94,14 @@ class TTFWindow(QDialog):
         returnButton.setStyleSheet(""
                                    "QPushButton { background-image: url('return.png'); border: none; }"
                                    "QToolTip { color: #000000; background-color:#ffffff ; border: 0px; }")
-
-        table = self.setupTable(4, 3)
+        if not self.getTableData():
+            tableCol = 3
+            tableRows = 4
+        else:
+            tableCol = len(self.getTableData()[1])
+            tableRows = len(self.getTableData())
+        table = self.setupTable(tableRows, tableCol)
+        print(tableCol, tableRows)
         vbox.addWidget(table, 3, 1)
         self.setLayout(vbox)
 
@@ -103,7 +109,7 @@ class TTFWindow(QDialog):
         print(self.textEditor.text())
 
     def getTableData(self):
-        table = [['A', 'B', 'A OR B'], [0, 0, 0], [0, 1, 1], [1, 0, 1], [1, 1, 1]]
+        table = []#[['A', 'B', 'A OR B'], [0, 0, 0], [0, 1, 1], [1, 0, 1], [1, 1, 1]] # function(self.textEditor.text())
         return table
 
     def setupTable(self, rows, columns):
