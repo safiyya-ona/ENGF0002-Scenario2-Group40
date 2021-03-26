@@ -51,7 +51,6 @@ class TTFWindow(QDialog):
         backGround = self.palette()
         backGround.setColor(self.backgroundRole(), QColor(15, 102, 102))
         self.setPalette(backGround)
-
         # self.table_widget = MyTableWidget(self)
         # self.setCentralWidget(self.truthTable())
         self.widgets()
@@ -59,10 +58,11 @@ class TTFWindow(QDialog):
 
     def widgets(self):
         vbox = QGridLayout()
+        widget = QWidget()
         vbox.setSpacing(20)
         title = QLabel("Truth Table Filler", self)
         title.move(400, 30)
-        title.setFont(QFont('Times', 25))
+        title.setFont(QFont('Times', 20))
         title.setStyleSheet("color: white;")
         title.adjustSize()
         vbox.addWidget(title, 1, 1)
@@ -72,6 +72,7 @@ class TTFWindow(QDialog):
         self.equationLabel.setFont(QFont('Times', 12))
         self.equationLabel.setStyleSheet("color: white;")
         vbox.addWidget(self.equationLabel, 2, 0)
+
         self.textEditor = QLineEdit(self)
         self.textEditor.move(350, 130)
         self.textEditor.resize(400, 40)
@@ -93,24 +94,24 @@ class TTFWindow(QDialog):
         returnButton.setStyleSheet(""
                                    "QPushButton { background-image: url('return.png'); border: none; }"
                                    "QToolTip { color: #000000; background-color:#ffffff ; border: 0px; }")
-        vbox.addWidget(returnButton, 4, 0)
 
         table = self.setupTable(4, 3)
         vbox.addWidget(table, 3, 1)
-
         self.setLayout(vbox)
 
     def sendEquation(self):
         print(self.textEditor.text())
 
     def getTableData(self):
-        table = [[0, 0, 0], [0, 1, 1], [1, 0, 1], [1, 1, 1]]
+        table = [['A', 'B', 'A OR B'], [0, 0, 0], [0, 1, 1], [1, 0, 1], [1, 1, 1]]
         return table
 
     def setupTable(self, rows, columns):
         table = QTableWidget()
         table.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
-        table.setHorizontalHeaderLabels(["A", "B", "A OR B"])
+        table.verticalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
+        table.horizontalHeader().setVisible(False)
+        table.verticalHeader().setVisible(False)
         table.setRowCount(rows)
         table.setColumnCount(columns)
         tableValues = self.getTableData()

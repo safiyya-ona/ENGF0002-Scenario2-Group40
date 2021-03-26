@@ -6,19 +6,20 @@ from PyQt5.QtWidgets import *
 
 class RevCards(QMainWindow):
     def __init__(self):
-        super().__init__()
+        super(RevCards, self).__init__()
         self.title = 'Revision Cards'
         self.setGeometry(50, 50, 1200, 700)
         backGround = self.palette()
         backGround.setColor(self.backgroundRole(), QColor(15, 102, 102))
         self.setPalette(backGround)
-        self.setMenuWidget(self.returnButton())
+        #self.setMenuWidget(self.returnButton())
         self.table_widget = MyTableWidget(self)
         self.setCentralWidget(self.table_widget)
-        self.menuWidget = QWidget(self)
-        self.menuWidgetLayout = QGridLayout(self.menuWidget)
-        self.menuWidget.setLayout(self.menuWidgetLayout)
-        self.menuWidgetLayout.addWidget(self.returnButton(), 1180, 680, 1, 1)
+        # self.menuWidget = QWidget(self)
+        # self.menuWidgetLayout = QGridLayout(self.menuWidget)
+        # self.menuWidget.setLayout(self.menuWidgetLayout)
+        # #self.menuWidgetLayout.addWidget(self.returnButton(), 1180, 680, 1, 1)
+        self.returnButton()
         self.show()
 
     def returnButton(self):
@@ -108,8 +109,8 @@ class MyTableWidget(QWidget):
         self.layout.addWidget(self.tabs)
         self.setLayout(self.layout)
 
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    ex = RevCards()
-    sys.exit(app.exec_())
+#
+# if __name__ == '__main__':
+#     app = QApplication(sys.argv)
+#     ex = RevCards()
+#     sys.exit(app.exec_())
