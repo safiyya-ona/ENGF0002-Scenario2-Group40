@@ -6,7 +6,7 @@ import sys
 from PyQt5 import QtWidgets
 from PyQt5.QtGui import QColor, QFont
 from PyQt5.QtWidgets import QFileDialog, QLabel
-import TruthTableGenerator
+import UITruthTableGenerator
 import revisionCards
 
 class Window(QtWidgets.QMainWindow):
@@ -54,7 +54,7 @@ class Window(QtWidgets.QMainWindow):
         print(fileName)
 
     def showTTF(self):
-        self.TTF = TruthTableGenerator.TTFWindow()
+        self.TTF = UITruthTableGenerator.TTFWindow()
         self.TTF.show()
 
     def showRevCardsFrame(self):

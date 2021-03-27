@@ -43,6 +43,9 @@ from PyQt5.QtWidgets import *
 #         self.tableWidget.setColumnCount(1)
 #         self.tableWidget.setItem(0, 0 , QTableWidgetItem("Hello"))
 #         self.tableWidget.move(300, 300)
+import main
+
+
 class TTFWindow(QDialog):
     def __init__(self):
         super(TTFWindow, self).__init__()
@@ -108,8 +111,13 @@ class TTFWindow(QDialog):
         print(self.textEditor.text())
 
     def getTableData(self):
-        table = [['A', 'B', 'A OR B'], [0, 0, 0], [0, 1, 1], [1, 0, 1], [1, 1, 1]] # function(self.textEditor.text())
+        # table = main.createTruthTable('A OR B')
+        # print(table)
+        table = [['A', 'B', 'A OR B'], [0, 0, 0], [0, 1, 1], [1, 0, 1], [1, 1, 1]]
         return table
+
+    # def updateTable(self):
+    #     self.setupTable()
 
     def setupTable(self, tableVals):
         table = QTableWidget()
