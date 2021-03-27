@@ -1,0 +1,16 @@
+ - analysing the expression
+
+ - output to the user
+
+ - display truth table
+
+ - Read File
+    Get lines
+
+- expression
+   - (expr)
+   - A | B | C | D 
+   - NOT expr | expr binoperator expr
+
+- binoperator = AND, OR, -> , <->
+
