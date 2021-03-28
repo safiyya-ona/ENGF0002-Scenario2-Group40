@@ -3,46 +3,6 @@
 from PyQt5 import QtWidgets
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-# class TableModel(QtCore.QAbstractTableModel):
-#     def __init__(self, data):
-#         super(TableModel, self).__init__()
-#         self._data = data
-#
-#     def data(self, index, role):
-#         if role == QtCore.DisplayRole:
-#             # See below for the nested-list data structure.
-#             # .row() indexes into the outer list,
-#             # .column() indexes into the sub-list
-#             return self._data[index.row()][index.column()]
-#
-#     def rowCount(self, index):
-#         # The length of the outer list.
-#         return len(self._data)
-#
-#     def columnCount(self, index):
-#         # The following takes the first sub-list, and returns
-#         # the length (only works if all rows are an equal length)
-#         return len(self._data[0])
-
-# class MyTable(QWidget):
-#
-#     def __init__(self):
-#         super(MyTable, self).__init__()
-#         self.Table()
-#
-#     def Table(self):
-#         self.mytable()
-#         self.layout = QVBoxLayout()
-#         self.layout.addWidget(self.tableWidget)
-#         self.setLayout(self.layout)
-#         self.show()
-#
-#     def mytable(self):
-#         self.tableWidget = QTableWidget()
-#         self.tableWidget.setRowCount(1)
-#         self.tableWidget.setColumnCount(1)
-#         self.tableWidget.setItem(0, 0 , QTableWidgetItem("Hello"))
-#         self.tableWidget.move(300, 300)
 import main
 
 class TTFWindow(QDialog):
@@ -85,7 +45,7 @@ class TTFWindow(QDialog):
         vbox.addWidget(self.Label, 2, 2)
 
         self.textEditor.move(350, 130)
-        self.textEditor.resize(400, 40)
+        self.textEditor.resize(400, 70)
         vbox.addWidget(self.textEditor, 2, 1)
 
         gap = QLabel("     ", self)
@@ -205,43 +165,4 @@ class TTFWindow(QDialog):
         # self.MainMenu.show()
         self.hide()
 
-# class MyTableWidget(QWidget):
-#     def __init__(self, parent):
-#         super(QWidget, self).__init__(parent)
-#         self.layout = QGridLayout(self)
-#
-#         # standard item model
-#         model = QtGui.QStandardItemModel(4, 3)
-#         model.setHorizontalHeaderLabels(['A', 'B', 'A V B'])
-#         for row, text in enumerate([0, 0, 0, 1]):
-#             item = QtGui.QStandardItem(text)
-#             model.setItem(0, row, item)
-#         for row, text in enumerate(['Cell', 'Fish', 'Apple', 'Ananas']):
-#             item = QtGui.QStandardItem(text)
-#             model.setItem(row, 2, item)
-#
-#         # filter proxy model
-#         filter_proxy_model = QtCore.QSortFilterProxyModel()
-#         filter_proxy_model.setSourceModel(model)
-#         #filter_proxy_model.setFilterKeyColumn(2)  # third column
-#         #layout = QVBoxLayout(window)
-#         # line_edit = QLineEdit()
-#         # line_edit.textChanged.connect(filter_proxy_model.setFilterRegExp)
-#         # layout.addWidget(line_edit)
-#
-#         # table view
-#         table = QTableView()
-#         table.setModel(filter_proxy_model)
-#         #layout.addWidget(table)
-#
-#         # Add tabs to widget
-#         self.layout.addWidget(table, 50, 2, 3, 4)
-#         self.setLayout(self.layout)
 
-# def run():
-#     app = QtWidgets.QApplication(sys.argv)
-#     GUI = TTFWindow()
-#     GUI.show()
-#     sys.exit(app.exec_())
-#
-# run()
