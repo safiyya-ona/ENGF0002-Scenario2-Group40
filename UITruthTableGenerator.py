@@ -45,7 +45,6 @@ from PyQt5.QtWidgets import *
 #         self.tableWidget.move(300, 300)
 import main
 
-
 class TTFWindow(QDialog):
     def __init__(self):
         super(TTFWindow, self).__init__()
@@ -55,20 +54,26 @@ class TTFWindow(QDialog):
         backGround.setColor(self.backgroundRole(), QColor(15, 102, 102))
         self.setPalette(backGround)
         # self.table_widget = MyTableWidget(self)
+        self.table = QTableWidget()
+        self.textEditor = QLineEdit(self)
         # self.setCentralWidget(self.truthTable())
         self.widgets()
         self.show()
 
     def widgets(self):
         vbox = QGridLayout()
-        widget = QWidget()
         vbox.setSpacing(20)
+        space = QLabel("     ", self)
+        space.setFont(QFont('Times', 20))
+        space.setStyleSheet("color: white;")
+        space.adjustSize()
+        vbox.addWidget(space, 1, 0)
+
         title = QLabel("Truth Table Filler", self)
         title.move(400, 30)
         title.setFont(QFont('Times', 20))
         title.setStyleSheet("color: white;")
         title.adjustSize()
-        vbox.addWidget(title, 1, 1)
 
         self.equationLabel = QLabel('Equation:', self)
         self.equationLabel.move(245, 132)
@@ -76,18 +81,44 @@ class TTFWindow(QDialog):
         self.equationLabel.setStyleSheet("color: white;")
         vbox.addWidget(self.equationLabel, 2, 0)
 
-        self.textEditor = QLineEdit(self)
         self.textEditor.move(350, 130)
         self.textEditor.resize(400, 40)
         vbox.addWidget(self.textEditor, 2, 1)
 
-        enter = QPushButton('SUBMIT', self)
-        enter.clicked.connect(self.sendEquation)
-        enter.resize(80, 40)
-        enter.move(820, 130)
-        enter.setToolTip("<h3>Enter Equation</h3>")
-        enter.setStyleSheet("background: green;")
-        vbox.addWidget(enter, 4, 2)
+        gap = QLabel("     ", self)
+        gap.setFont(QFont('Times', 20))
+        gap.setStyleSheet("color: white;")
+        gap.adjustSize()
+        vbox.addWidget(gap, 5, 2)
+
+        enter = QPushButton(' ', self)
+        enter.clicked.connect(self.checkTable)
+        enter.resize(100, 100)
+        enter.move(920, 580)
+        enter.setToolTip("<h3>Check Answer</h3>")
+        enter.setStyleSheet(""
+                            "QPushButton { background-image: url('CHECK.png'); border: none; }"
+                            "QToolTip { color: #000000; background-color:#ffffff ; border: 0px; }")
+        # vbox.addWidget(enter, 4, 2)
+
+        show = QPushButton(' ', self)
+        show.clicked.connect(self.showTTF)
+        show.resize(100, 100)
+        show.move(820, 580)
+        show.setToolTip("<h3>Show Answer</h3>")
+        show.setStyleSheet(""
+                           "QPushButton { background-image: url('SHOW.png'); border: none; }"
+                           "QToolTip { color: #000000; background-color:#ffffff ; border: 0px; }")
+
+        plus = QPushButton('PLUS', self)
+        plus.clicked.connect(self.adjustTable)
+        plus.resize(100, 100)
+        plus.move(1110, 130)
+        plus.setToolTip("<h3>Show Answer</h3>")
+        plus.setStyleSheet(""
+                           "QPushButton { background-color: white; border: none; }"
+                           "QToolTip { color: #000000; background-color:#ffffff ; border: 0px; }")
+        #vbox.addWidget(show, 5, 2)
 
         returnButton = QPushButton('', self)
         returnButton.clicked.connect(self.returnMainMenu)
@@ -103,40 +134,59 @@ class TTFWindow(QDialog):
         # else:
         #     tableCol = len(self.getTableData()[1])
         #     tableRows = len(self.getTableData())
-        table = self.setupTable(self.getTableData())
-        vbox.addWidget(table, 3, 1)
+        self.table = self.setupTable([], 5, 3)
+        vbox.addWidget(self.table, 3, 1)
         self.setLayout(vbox)
 
-    def sendEquation(self):
+    def showTTF(self):
         print(self.textEditor.text())
+        table = main.createTruthTable(str(self.textEditor.text()))
+        newTable = table.run()
+        print(newTable)
+        self.setupTable(newTable, 0, 0)
 
-    def getTableData(self):
-        # table = main.createTruthTable('A OR B')
-        # print(table)
-        table = [['A', 'B', 'A OR B'], [0, 0, 0], [0, 1, 1], [1, 0, 1], [1, 1, 1]]
-        return table
+    def adjustTable(self):
+        rows = main.createTruthTable(str(self.textEditor.text())).numberOfRows()
+        print(rows)
+        columns = main.createTruthTable(self.textEditor.text()).numberOfColumns
+        print(columns)
+        self.setupTable([], rows, columns)
 
-    # def updateTable(self):
-    #     self.setupTable()
+    # def getTableData(self):
+    #     # table = main.createTruthTable('A OR B')
+    #     # print(table)
+    #     table = [] # [['A', 'B', 'A OR B'], [0, 0, 0], [0, 1, 1], [1, 0, 1], [1, 1, 1]]
+    #     return table
 
-    def setupTable(self, tableVals):
-        table = QTableWidget()
-        table.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
-        table.verticalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
-        table.horizontalHeader().setVisible(False)
-        table.verticalHeader().setVisible(False)
+    def checkTable(self):
+        # self.setupTable()
+        userEntry = []
+        # tableValues = main.createTruthTable(s)
+        for row in range(1, len(self.table)):
+            for colVal in range(1, len(self.table[row])):
+                # table.setItem(row, colVal, QTableWidgetItem(str(tableVals[row][colVal])))
+                value = (table.item(row, colVal)).text()
+                print(value)
+                userEntry.append(value)
+
+    def setupTable(self, tableVals, rows, columns):
+        self.table.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
+        self.table.verticalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
+        self.table.horizontalHeader().setVisible(False)
+        self.table.verticalHeader().setVisible(False)
         if not tableVals:
-            table.setRowCount(5)
-            table.setColumnCount(3)
+            self.table.setRowCount(rows)
+            self.table.setColumnCount(columns)
         else:
-            table.setRowCount(len(tableVals))
-            table.setColumnCount(len(tableVals[0]))
-            tableValues = self.getTableData()
-            for row in range(0, len(tableValues)):
-                for colVal in range(0, len(tableValues[row])):
-                    table.setItem(row, colVal, QTableWidgetItem(str(tableValues[row][colVal])))
-                    print((table.item(row, colVal)).text())
-        return table
+            self.table.setRowCount(len(tableVals))
+            self.table.setColumnCount(len(tableVals[0]))
+            # tableValues = self.getTableData()
+            for row in range(0, len(tableVals)):
+                for colVal in range(0, len(tableVals[row])):
+                    self.table.setItem(row, colVal, QTableWidgetItem(str(tableVals[row][colVal])))
+                    print(tableVals[row][colVal])
+                    # print((table.item(row, colVal)).text())
+        return self.table
 
     def returnMainMenu(self):
         print("return")

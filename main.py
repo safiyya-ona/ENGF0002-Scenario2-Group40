@@ -121,7 +121,6 @@ class createTruthTable:
         self.origQuestionString = question
         self.headingsformulalist = []
         self.rows = []
-        
 
     def numberOfColumns(self):
         return self.formula.variableNum + 1
