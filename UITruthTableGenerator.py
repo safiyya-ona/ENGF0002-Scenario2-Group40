@@ -171,15 +171,14 @@ class TTFWindow(QDialog):
 
     def checkTable(self):
         # self.setupTable()
-
-        userEntry = []
+        userEntry = [[]]
         # tableValues = main.createTruthTable(s)
         for row in range(1, len(self.table)):
             for colVal in range(1, len(self.table[row])):
                 # table.setItem(row, colVal, QTableWidgetItem(str(tableVals[row][colVal])))
                 value = (table.item(row, colVal)).text()
                 print(value)
-                userEntry.append(value)
+                userEntry[row].append(value)
 
     def setupTable(self, tableVals, rows, columns):
         self.table.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
