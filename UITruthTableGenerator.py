@@ -53,10 +53,8 @@ class TTFWindow(QDialog):
         backGround = self.palette()
         backGround.setColor(self.backgroundRole(), QColor(15, 102, 102))
         self.setPalette(backGround)
-        # self.table_widget = MyTableWidget(self)
         self.table = QTableWidget()
         self.textEditor = QLineEdit(self)
-        # self.setCentralWidget(self.truthTable())
         self.widgets()
         self.show()
 
@@ -81,6 +79,11 @@ class TTFWindow(QDialog):
         self.equationLabel.setStyleSheet("color: white;")
         vbox.addWidget(self.equationLabel, 2, 0)
 
+        self.Label = QLabel('            ', self)
+        self.Label.setFont(QFont('Times', 12))
+        self.Label.setStyleSheet("color: white;")
+        vbox.addWidget(self.Label, 2, 2)
+
         self.textEditor.move(350, 130)
         self.textEditor.resize(400, 40)
         vbox.addWidget(self.textEditor, 2, 1)
@@ -94,17 +97,17 @@ class TTFWindow(QDialog):
         enter = QPushButton(' ', self)
         enter.clicked.connect(self.checkTable)
         enter.resize(100, 100)
-        enter.move(920, 580)
+        enter.move(1080, 450)
         enter.setToolTip("<h3>Check Answer</h3>")
         enter.setStyleSheet(""
                             "QPushButton { background-image: url('CHECK.png'); border: none; }"
                             "QToolTip { color: #000000; background-color:#ffffff ; border: 0px; }")
-        # vbox.addWidget(enter, 4, 2)
+        #vbox.addWidget(enter, 4, 2)
 
         show = QPushButton(' ', self)
         show.clicked.connect(self.showTTF)
         show.resize(100, 100)
-        show.move(820, 580)
+        show.move(1080, 580)
         show.setToolTip("<h3>Show Answer</h3>")
         show.setStyleSheet(""
                            "QPushButton { background-image: url('SHOW.png'); border: none; }"
@@ -118,7 +121,7 @@ class TTFWindow(QDialog):
         plus.setStyleSheet(""
                            "QPushButton { background-color: white; border: none; }"
                            "QToolTip { color: #000000; background-color:#ffffff ; border: 0px; }")
-        #vbox.addWidget(show, 5, 2)
+        vbox.addWidget(plus, 3, 2)
 
         returnButton = QPushButton('', self)
         returnButton.clicked.connect(self.returnMainMenu)
@@ -143,12 +146,20 @@ class TTFWindow(QDialog):
         table = main.createTruthTable(str(self.textEditor.text()))
         newTable = table.run()
         print(newTable)
+
         self.setupTable(newTable, 0, 0)
 
+    # def _createStatusBar(self):
+    #     self.statusbar = QStatusBar()
+    #     self.setStatusBar(self.statusbar)
+    #     self.statusbar.move(100, 580)
+    #     self.statusbar.showMessage("Invalid Entry", 3000)
+
     def adjustTable(self):
+        # https://stackoverflow.com/questions/21945044/wait-for-last-character-typed-in-qlineeditontextchanged
         rows = main.createTruthTable(str(self.textEditor.text())).numberOfRows()
         print(rows)
-        columns = main.createTruthTable(self.textEditor.text()).numberOfColumns
+        columns = main.createTruthTable(self.textEditor.text()).numberOfColumns()
         print(columns)
         self.setupTable([], rows, columns)
 
@@ -160,6 +171,7 @@ class TTFWindow(QDialog):
 
     def checkTable(self):
         # self.setupTable()
+
         userEntry = []
         # tableValues = main.createTruthTable(s)
         for row in range(1, len(self.table)):
