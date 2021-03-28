@@ -193,7 +193,6 @@ class createTruthTable:
         self.createTableHeadings()
         table = [self.tableheadings]
         table.extend(self.createRows())
-        print(table)
         return table
         
 
