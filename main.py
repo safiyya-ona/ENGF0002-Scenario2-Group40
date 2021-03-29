@@ -136,7 +136,6 @@ class createTruthTable:
         if self.formula.d != 0:
             self.tableheadings.append("D")
         self.tableheadings.append("Result")
-        # self.traverse(self.formula.res)
     
     def numberOfRows(self):
         return 2 ** self.formula.variableNum
@@ -157,12 +156,9 @@ class createTruthTable:
             except SyntaxError:
                 raise QuestionWrongFormat
                 pass
-            values.append(int(result))
+            values.append(str(int(result)))
             rows.append(values)
         return rows
-        
-    def trueOrFalse(self):
-        pass
 
     def replaceOperators(self):
         replaceAnds = self.formula.convertedString.replace("AND", "&")
@@ -170,7 +166,6 @@ class createTruthTable:
         replaceNots = replaceOrs.replace("NOT", "~")
         return replaceNots
         
-
     def run(self):
         self.formula = checkExpression(self.origQuestionString)
         if not self.formula.run():
@@ -278,6 +273,6 @@ class GenerateQuestions:
 
 if __name__ == "__main__":
     truthTable = createTruthTable("((NOT A) OR B) <-> C")
-    truthTable.run()
-    read  = CheckFile("test.txt")
-    print(read.run())
+    print(truthTable.run())
+    #read  = CheckFile("test.txt")
+    #print(read.run())
