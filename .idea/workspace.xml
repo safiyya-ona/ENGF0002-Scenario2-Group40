@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="69d38d44-2a03-4c2a-bba2-206a69fc8f7d" name="Default Changelist" comment="working table show">
+    <list default="true" id="69d38d44-2a03-4c2a-bba2-206a69fc8f7d" name="Default Changelist" comment="update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ExerciseButton.png" beforeDir="false" afterPath="$PROJECT_DIR$/ExerciseButton.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MainMenu.py" beforeDir="false" afterPath="$PROJECT_DIR$/MainMenu.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Quiz.py" beforeDir="false" afterPath="$PROJECT_DIR$/Quiz.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -83,7 +81,14 @@
       <option name="project" value="LOCAL" />
       <updated>1616958617956</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="update">
+      <created>1617042366071</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1617042366071</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -101,6 +106,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first push" />
     <MESSAGE value="working table show" />
-    <option name="LAST_COMMIT_MESSAGE" value="working table show" />
+    <MESSAGE value="update" />
+    <option name="LAST_COMMIT_MESSAGE" value="update" />
   </component>
 </project>

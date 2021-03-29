@@ -39,7 +39,7 @@ class QuizWindow(QDialog):
         vbox.addWidget(self.questionLabel, 2, 0)
 
         self.equationLabel = QLabel(self)
-        equation = "A OR B OR C AND D" # function(random)
+        equation = "A OR B AND C AND D" # function(random)
         self.equationLabel.setText(equation)
         self.equationLabel.move(245, 132)
         self.equationLabel.setFont(QFont('Times', 12))
@@ -63,7 +63,11 @@ class QuizWindow(QDialog):
 
         rows = self.returnRows(equation)
         columns = self.returnColumns(equation)
+        # firstRow =  self.headings(equation)
+        # table = []
+        # table.append(firstRow)
         self.table = self.setupTable([], rows, columns)
+        self.table = self.headings(equation)
         vbox.addWidget(self.table, 3, 1)
         self.setLayout(vbox)
 
@@ -77,6 +81,13 @@ class QuizWindow(QDialog):
         newTable = table.run()
         return len(newTable[0])
 
+    def headings(self, equation):
+        table = main.createTruthTable(equation)
+        newTable = table.run()
+        for row in range(0, 1):
+            for colVal in range(0, len(newTable[row])):
+                self.table.setItem(row, colVal, QTableWidgetItem(str(newTable[row][colVal])))
+        return self.table
 
     def setupTable(self, tableVals, rows, columns):
         self.table.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
