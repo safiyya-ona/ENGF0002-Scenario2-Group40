@@ -12,6 +12,7 @@ class QuizWindow(QDialog):
         background.setColor(self.backgroundRole(), QColor(15, 102, 102))
         self.setPalette(background)
         self.table = QTableWidget()
+        self.equation = "A OR B"  # function(random)
         self.widgets()
         self.show()
 
@@ -39,12 +40,21 @@ class QuizWindow(QDialog):
         vbox.addWidget(self.questionLabel, 2, 0)
 
         self.equationLabel = QLabel(self)
-        equation = "A OR B AND C AND D" # function(random)
-        self.equationLabel.setText(equation)
+
+        self.equationLabel.setText(self.equation)
         self.equationLabel.move(245, 132)
         self.equationLabel.setFont(QFont('Times', 12))
         self.equationLabel.setStyleSheet("color: white;")
         vbox.addWidget(self.equationLabel, 2, 1)
+
+        check = QPushButton(' ', self)
+        check.clicked.connect(self.checkTable)
+        check.resize(100, 100)
+        check.move(1080, 580)
+        check.setToolTip("<h3>Show Answer</h3>")
+        check.setStyleSheet(""
+                           "QPushButton { background-image: url('CHECK.png'); border: none; }"
+                           "QToolTip { color: #000000; background-color:#ffffff ; border: 0px; }")
 
         returnButton = QPushButton('', self)
         returnButton.clicked.connect(self.returnMainMenu)
@@ -61,13 +71,13 @@ class QuizWindow(QDialog):
         gap.adjustSize()
         vbox.addWidget(gap, 5, 2)
 
-        rows = self.returnRows(equation)
-        columns = self.returnColumns(equation)
+        rows = self.returnRows(self.equation)
+        columns = self.returnColumns(self.equation)
         # firstRow =  self.headings(equation)
         # table = []
         # table.append(firstRow)
         self.table = self.setupTable([], rows, columns)
-        self.table = self.headings(equation)
+        self.table = self.headings(self.equation)
         vbox.addWidget(self.table, 3, 1)
         self.setLayout(vbox)
 
@@ -118,17 +128,38 @@ class QuizWindow(QDialog):
 
     def checkTable(self):
         # self.setupTable()
-        userEntry = [[]]
-        # tableValues = main.createTruthTable(s)
-        for row in range(0, len(self.table)):
-            for colVal in range(0, len(self.table[row])):
+        userEntry = []
+        tableValues = main.createTruthTable(self.equation)
+        CorrectTable = tableValues.run()
+        for row in range(0, len(CorrectTable)):
+            rowVal = []
+            for colVal in range(0, len(CorrectTable[row])):
                 # table.setItem(row, colVal, QTableWidgetItem(str(tableVals[row][colVal])))
+                # print((self.table.item(row, colVal)))
                 value = (self.table.item(row, colVal)).text()
                 print(value)
-                userEntry[row].append(value)
+                rowVal.append(value)
+                # userEntry.append(value)
+            userEntry.append(rowVal)
+        print(sorted(userEntry))
+        print(sorted(CorrectTable))
+        # correct = False
+        # for row in (0, len(CorrectTable):
+        #     if CorrectTable[row] in userEntry:
+        #
+        #
+        if sorted(userEntry) == sorted(CorrectTable):
+            print("correct")
+        else:
+            print("INCORRECT")
+        #     self._createStatusBar()
+
+    def _createStatusBar(self):
+        self.statusbar = QStatusBar()
+        self.setStatusBar(self.statusbar)
+        self.statusbar.move(100, 580)
+        self.statusbar.showMessage("Correct", 4000)
 
     def returnMainMenu(self):
         print("return")
-        # self.MainMenu = pyQt.Window()
-        # self.MainMenu.show()
         self.hide()
