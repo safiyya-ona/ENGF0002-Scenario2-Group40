@@ -53,7 +53,6 @@ class TTFWindow(QDialog):
         gap.adjustSize()
         vbox.addWidget(gap, 5, 2)
 
-
         show = QPushButton(' ', self)
         show.clicked.connect(self.showTTF)
         show.resize(100, 100)
