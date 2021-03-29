@@ -3,6 +3,7 @@ import sys
 from pyparsing import *
 import copy
 import math
+import random
 
 ParserElement.enablePackrat()
 sys.setrecursionlimit(3000)
@@ -135,7 +136,6 @@ class createTruthTable:
         if self.formula.d != 0:
             self.tableheadings.append("D")
         self.tableheadings.append("Result")
-        # self.traverse(self.formula.res)
     
     def numberOfRows(self):
         return 2 ** self.formula.variableNum
@@ -156,12 +156,9 @@ class createTruthTable:
             except SyntaxError:
                 raise QuestionWrongFormat
                 pass
-            values.append(int(result))
+            values.append(str(int(result)))
             rows.append(values)
         return rows
-        
-    def trueOrFalse(self):
-        pass
 
     def replaceOperators(self):
         replaceAnds = self.formula.convertedString.replace("AND", "&")
@@ -169,7 +166,6 @@ class createTruthTable:
         replaceNots = replaceOrs.replace("NOT", "~")
         return replaceNots
         
-
     def run(self):
         self.formula = checkExpression(self.origQuestionString)
         if not self.formula.run():
@@ -228,21 +224,19 @@ class CheckFile:
             newQuestion = checkExpression(line)
             if not newQuestion.run():
                 raise WrongFileFormat(i)
-                pass
 
     def generateTruthTables(self):
         # reads number of questions
         inputFile = open(self.filename, "r")
         line1 = inputFile.readline().strip().split(" ")
         numQuestions = int(line1[0])
-        #reads each question and checks
+        #reads each question and generates table
         for i in range(numQuestions):
             line = inputFile.readline().strip()
             newTable = createTruthTable(line)
             table = newTable.run()
         
-            self.generatedTables.update({i + 1: table})
-        print(self.generatedTables.keys())       
+            self.generatedTables.update({i + 1: table})      
         return self.generatedTables
 
     def run(self):
@@ -250,23 +244,35 @@ class CheckFile:
         self.generateTruthTables()
 
 
+class GenerateQuestions:
+    def __init__(self, filename):
+        self.filename = filename
+        self.questionDatabase = list()
+        self.numQuestions = 0
+
+    def addQuestions(self):
+        # reads number of questions
+        inputFile = open(self.filename, "r")
+        line1 = inputFile.readline().strip().split(" ")
+        self.numQuestions = int(line1[0])
+        #reads each question and adds to list
+        for i in range(self.numQuestions):
+            line = inputFile.readline().strip()
+            self.questionDatabase.append(line)
+
+    def getQuestion(self):
+        number = random.randint(0, self.numQuestions-1)
+        return self.questionDatabase[number]
+
+    def run(self):
+        self.addQuestions()
+        self.getQuestion()
+
 # ((NOT A) OR B) <-> ((B OR C) -> D)
 
 
 if __name__ == "__main__":
     truthTable = createTruthTable("((NOT A) OR B) <-> C")
-    truthTable.run()
-    read  = CheckFile("test.txt")
-    print(read.run())
-
-    # inputFile = open("test.txt", "r")
-    # line1 = inputFile.readline().strip().split(" ")
-    # numQuestions = int(line1[0])
-    # for i in range(numQuestions):
-    #     line = inputFile.readline().strip()
-    #     newQuestion = checkExpression(line)
-    #     if not newQuestion.run():
-    #         raise WrongFileFormat(i)
-    #         pass
-
-
+    print(truthTable.run())
+    #read  = CheckFile("test.txt")
+    #print(read.run())
