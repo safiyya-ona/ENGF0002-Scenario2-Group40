@@ -194,18 +194,61 @@ class QuestionWrongFormat(TruthTableErrors):
     """ Raised when question has wrong format """
     pass
 
+class WrongFileFormat(TruthTableErrors):
+    """Raised when file format is wrong"""
+    """ Attributes 
+        message - Wrong question on line: 
+        linenumber - where the wrong message is
+    
+    """
+    def __init__(self, linenumber, message= "Wrong question format for Question {}"):
+        self.linenumber = linenumber + 1
+        self.message  = message
+        super().__init__(self.message)
+
+    def __str__(self):
+        return self.message.format(self.linenumber)
+    pass
 
         
 
-class ReadFile:
+class CheckFile:
     def __init__(self, filename):
         self.filename = filename
+        self.generatedTables = dict()
 
-    def numberOfQuestions(self):
-        pass
+    def checkQuestionFormats(self):
+        # reads number of questions
+        inputFile = open(self.filename, "r")
+        line1 = inputFile.readline().strip().split(" ")
+        numQuestions = int(line1[0])
+        #reads each question and checks
+        for i in range(numQuestions):
+            line = inputFile.readline().strip()
+            newQuestion = checkExpression(line)
+            if not newQuestion.run():
+                raise WrongFileFormat(i)
+                pass
 
-    def addQuestions(self):
-        pass
+    def generateTruthTables(self):
+        # reads number of questions
+        inputFile = open(self.filename, "r")
+        line1 = inputFile.readline().strip().split(" ")
+        numQuestions = int(line1[0])
+        #reads each question and checks
+        for i in range(numQuestions):
+            line = inputFile.readline().strip()
+            newTable = createTruthTable(line)
+            table = newTable.run()
+        
+            self.generatedTables.update({i + 1: table})
+        print(self.generatedTables.keys())       
+        return self.generatedTables
+
+    def run(self):
+        self.checkQuestionFormats()
+        self.generateTruthTables()
+
 
 # ((NOT A) OR B) <-> ((B OR C) -> D)
 
@@ -213,3 +256,17 @@ class ReadFile:
 if __name__ == "__main__":
     truthTable = createTruthTable("((NOT A) OR B) <-> C")
     truthTable.run()
+    read  = CheckFile("test.txt")
+    print(read.run())
+
+    # inputFile = open("test.txt", "r")
+    # line1 = inputFile.readline().strip().split(" ")
+    # numQuestions = int(line1[0])
+    # for i in range(numQuestions):
+    #     line = inputFile.readline().strip()
+    #     newQuestion = checkExpression(line)
+    #     if not newQuestion.run():
+    #         raise WrongFileFormat(i)
+    #         pass
+
+
