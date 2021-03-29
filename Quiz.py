@@ -18,9 +18,7 @@ class QuizWindow(QDialog):
         self.show()
 
     def widgets(self):
-
         self.vbox.setSpacing(20)
-
         space = QLabel("     ", self)
         space.setFont(QFont('Times', 20))
         space.setStyleSheet("color: white;")
@@ -144,11 +142,7 @@ class QuizWindow(QDialog):
             userEntry.append(rowVal)
         print(sorted(userEntry))
         print(sorted(CorrectTable))
-        # correct = False
-        # for row in (0, len(CorrectTable):
-        #     if CorrectTable[row] in userEntry:
-        #
-        #
+
         if sorted(userEntry) == sorted(CorrectTable):
             print("correct")
             self._createStatusBar("CORRECT!")
