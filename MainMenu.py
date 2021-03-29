@@ -9,6 +9,7 @@ from PyQt5.QtWidgets import QFileDialog, QLabel
 import UITruthTableGenerator
 import revisionCards
 import Quiz
+import main
 
 class Window(QtWidgets.QMainWindow):
     def __init__(self):
@@ -53,13 +54,19 @@ class Window(QtWidgets.QMainWindow):
         quizButton.resize(300, 300)
         quizButton.move(800, 180)
         quizButton.setToolTip("<h3>Create Exercise</h3>")
-        quizButton.setStyleSheet("background-image: url('QUIZIcon.py.png'); border: none;")
+        quizButton.setStyleSheet("background-image: url('QUIZIcon.png'); border: none;")
 
         self.show()
 
     def getfile(self):
         fileName = QFileDialog.getOpenFileName(self, 'Open file', 'c:\\', "Text files (*.txt)")
-        print(fileName)
+        try:
+            file = main.CheckFile(fileName[0])
+            file.checkQuestionFormats()
+        except main.WrongFileFormat:
+            pass
+
+        print(fileName[0])
 
     def showTTF(self):
         self.TTF = UITruthTableGenerator.TTFWindow()

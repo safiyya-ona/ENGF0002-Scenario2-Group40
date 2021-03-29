@@ -38,9 +38,8 @@ class QuizWindow(QDialog):
         self.questionLabel.setStyleSheet("color: white;")
         vbox.addWidget(self.questionLabel, 2, 0)
 
-
         self.equationLabel = QLabel(self)
-        equation = "A OR B OR C" # function(random)
+        equation = "A OR B OR C AND D" # function(random)
         self.equationLabel.setText(equation)
         self.equationLabel.move(245, 132)
         self.equationLabel.setFont(QFont('Times', 12))
@@ -113,7 +112,7 @@ class QuizWindow(QDialog):
         for row in range(0, len(self.table)):
             for colVal in range(0, len(self.table[row])):
                 # table.setItem(row, colVal, QTableWidgetItem(str(tableVals[row][colVal])))
-                value = (table.item(row, colVal)).text()
+                value = (self.table.item(row, colVal)).text()
                 print(value)
                 userEntry[row].append(value)
 
