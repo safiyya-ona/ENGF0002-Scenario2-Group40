@@ -1,5 +1,4 @@
 # https://www.youtube.com/watch?v=ECIZgWeyFFk&ab_channel=ParwizForogh
-
 from PyQt5 import QtWidgets
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
@@ -54,15 +53,6 @@ class TTFWindow(QDialog):
         gap.adjustSize()
         vbox.addWidget(gap, 5, 2)
 
-        enter = QPushButton(' ', self)
-        enter.clicked.connect(self.checkTable)
-        enter.resize(100, 100)
-        enter.move(1080, 450)
-        enter.setToolTip("<h3>Check Answer</h3>")
-        enter.setStyleSheet(""
-                            "QPushButton { background-image: url('CHECK.png'); border: none; }"
-                            "QToolTip { color: #000000; background-color:#ffffff ; border: 0px; }")
-        #vbox.addWidget(enter, 4, 2)
 
         show = QPushButton(' ', self)
         show.clicked.connect(self.showTTF)
@@ -73,16 +63,6 @@ class TTFWindow(QDialog):
                            "QPushButton { background-image: url('SHOW.png'); border: none; }"
                            "QToolTip { color: #000000; background-color:#ffffff ; border: 0px; }")
 
-        plus = QPushButton('PLUS', self)
-        plus.clicked.connect(self.adjustTable)
-        plus.resize(100, 100)
-        plus.move(1110, 130)
-        plus.setToolTip("<h3>Show Answer</h3>")
-        plus.setStyleSheet(""
-                           "QPushButton { background-color: white; border: none; }"
-                           "QToolTip { color: #000000; background-color:#ffffff ; border: 0px; }")
-        vbox.addWidget(plus, 3, 2)
-
         returnButton = QPushButton('', self)
         returnButton.clicked.connect(self.returnMainMenu)
         returnButton.resize(100, 100)
@@ -91,26 +71,14 @@ class TTFWindow(QDialog):
         returnButton.setStyleSheet(""
                                    "QPushButton { background-image: url('return.png'); border: none; }"
                                    "QToolTip { color: #000000; background-color:#ffffff ; border: 0px; }")
-        # if not self.getTableData():
-        #     tableCol = 3
-        #     tableRows = 4
-        # else:
-        #     tableCol = len(self.getTableData()[1])
-        #     tableRows = len(self.getTableData())
         self.table = self.setupTable([], 5, 3)
         vbox.addWidget(self.table, 3, 1)
         self.setLayout(vbox)
 
     def showTTF(self):
         print(self.textEditor.text())
-        try:
-            table = main.createTruthTable(str(self.textEditor.text()))
-            newTable = table.run()
-            print(newTable)
-        except main.QuestionWrongFormat:
-            print("Question is of wrong format")
-            newTable = []
-            pass
+        table = main.createTruthTable(str(self.textEditor.text()))
+        newTable = table.run()
 
         self.setupTable(newTable, 0, 0)
 
@@ -120,30 +88,11 @@ class TTFWindow(QDialog):
     #     self.statusbar.move(100, 580)
     #     self.statusbar.showMessage("Invalid Entry", 3000)
 
-    def adjustTable(self):
-        # https://stackoverflow.com/questions/21945044/wait-for-last-character-typed-in-qlineeditontextchanged
-        rows = main.createTruthTable(str(self.textEditor.text())).numberOfRows()
-        print(rows)
-        columns = main.createTruthTable(self.textEditor.text()).numberOfColumns()
-        print(columns)
-        self.setupTable([], rows, columns)
-
     # def getTableData(self):
     #     # table = main.createTruthTable('A OR B')
     #     # print(table)
     #     table = [] # [['A', 'B', 'A OR B'], [0, 0, 0], [0, 1, 1], [1, 0, 1], [1, 1, 1]]
     #     return table
-
-    def checkTable(self):
-        # self.setupTable()
-        userEntry = [[]]
-        # tableValues = main.createTruthTable(s)
-        for row in range(1, len(self.table)):
-            for colVal in range(1, len(self.table[row])):
-                # table.setItem(row, colVal, QTableWidgetItem(str(tableVals[row][colVal])))
-                value = (table.item(row, colVal)).text()
-                print(value)
-                userEntry[row].append(value)
 
     def setupTable(self, tableVals, rows, columns):
         self.table.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
@@ -160,7 +109,7 @@ class TTFWindow(QDialog):
             for row in range(0, len(tableVals)):
                 for colVal in range(0, len(tableVals[row])):
                     self.table.setItem(row, colVal, QTableWidgetItem(str(tableVals[row][colVal])))
-                    print(tableVals[row][colVal])
+                    #print(tableVals[row][colVal])
                     # print((table.item(row, colVal)).text())
         return self.table
 
