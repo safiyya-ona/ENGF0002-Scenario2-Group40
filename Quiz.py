@@ -10,21 +10,22 @@ class QuizWindow(QDialog):
         self.setWindowTitle("Quiz")
         background = self.palette()
         background.setColor(self.backgroundRole(), QColor(15, 102, 102))
+        self.vbox = QGridLayout()
         self.setPalette(background)
         self.table = QTableWidget()
-        self.equation = "A OR B"  # function(random)
+        self.equation = "NOT A"  # function(random)
         self.widgets()
         self.show()
 
     def widgets(self):
-        vbox = QGridLayout()
-        vbox.setSpacing(20)
+
+        self.vbox.setSpacing(20)
 
         space = QLabel("     ", self)
         space.setFont(QFont('Times', 20))
         space.setStyleSheet("color: white;")
         space.adjustSize()
-        vbox.addWidget(space, 1, 0)
+        self.vbox.addWidget(space, 1, 0)
         title = QLabel("Quiz Mode", self)
         title.move(400, 30)
         title.setFont(QFont('Times', 20))
@@ -37,15 +38,15 @@ class QuizWindow(QDialog):
         self.questionLabel.move(245, 132)
         self.questionLabel.setFont(QFont('Times', 12))
         self.questionLabel.setStyleSheet("color: white;")
-        vbox.addWidget(self.questionLabel, 2, 0)
+        self.vbox.addWidget(self.questionLabel, 2, 0)
 
         self.equationLabel = QLabel(self)
 
         self.equationLabel.setText(self.equation)
         self.equationLabel.move(245, 132)
-        self.equationLabel.setFont(QFont('Times', 12))
+        self.equationLabel.setFont(QFont('Times', 15))
         self.equationLabel.setStyleSheet("color: white;")
-        vbox.addWidget(self.equationLabel, 2, 1)
+        self.vbox.addWidget(self.equationLabel, 2, 1)
 
         check = QPushButton(' ', self)
         check.clicked.connect(self.checkTable)
@@ -69,7 +70,7 @@ class QuizWindow(QDialog):
         gap.setFont(QFont('Times', 20))
         gap.setStyleSheet("color: white;")
         gap.adjustSize()
-        vbox.addWidget(gap, 5, 2)
+        self.vbox.addWidget(gap, 5, 2)
 
         rows = self.returnRows(self.equation)
         columns = self.returnColumns(self.equation)
@@ -78,8 +79,8 @@ class QuizWindow(QDialog):
         # table.append(firstRow)
         self.table = self.setupTable([], rows, columns)
         self.table = self.headings(self.equation)
-        vbox.addWidget(self.table, 3, 1)
-        self.setLayout(vbox)
+        self.vbox.addWidget(self.table, 3, 1)
+        self.setLayout(self.vbox)
 
     def returnRows(self, equation):
         table = main.createTruthTable(equation)
@@ -150,15 +151,18 @@ class QuizWindow(QDialog):
         #
         if sorted(userEntry) == sorted(CorrectTable):
             print("correct")
+            self._createStatusBar("CORRECT!")
         else:
             print("INCORRECT")
-        #     self._createStatusBar()
+            self._createStatusBar("INCORRECT. Try Again.")
 
-    def _createStatusBar(self):
+    def _createStatusBar(self, message):
         self.statusbar = QStatusBar()
-        self.setStatusBar(self.statusbar)
+        # self.setStatusBar(self.statusbar)
         self.statusbar.move(100, 580)
-        self.statusbar.showMessage("Correct", 4000)
+        self.statusbar.showMessage(message, 4000)
+        self.vbox.addWidget(self.statusbar, 5, 1)
+        # self.show()
 
     def returnMainMenu(self):
         print("return")
