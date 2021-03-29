@@ -142,7 +142,6 @@ class createTruthTable:
 
     def createRows(self):
         rows  = []
-        #evalFormula = self.replaceOperators()
         for i in range(self.numberOfRows()):
             binary  = bin(i)[2:].zfill(self.formula.variableNum)
             values = list(binary)
@@ -151,7 +150,12 @@ class createTruthTable:
                 if px == "Result":
                     continue
                 evalVariables.update({px.lower(): int(values[j])})
-            result = eval(self.formula.convertedString,evalVariables)
+
+            try:
+                result = eval(self.formula.convertedString,evalVariables)
+            except SyntaxError:
+                raise QuestionWrongFormat
+                pass
             values.append(int(result))
             rows.append(values)
         return rows
@@ -165,28 +169,14 @@ class createTruthTable:
         replaceNots = replaceOrs.replace("NOT", "~")
         return replaceNots
         
-    # def getHeadingsFormula(self):
-    #     self.headingsformulalist = []
-    #     value = list(self.traverse(self.formula.res))
-    #     print(self.headingsformulalist)
-
-    # def traverse(self, o, tree_types=(list, tuple)):
-    #     if isinstance(o, tree_types):
-    #         for value in o:
-    #             if isinstance(value, list):
-    #                 self.headingsformulalist.append(" ".join(str(value)))
-                
-    #             for subvalue in self.traverse(value, tree_types):
-    #                 yield subvalue
-    #     else:
-    #         yield o
 
     def run(self):
         self.formula = checkExpression(self.origQuestionString)
         if not self.formula.run():
             # exception error in code_body
             print("Wrong format")
-            return
+            raise QuestionWrongFormat
+            pass
         convertFormula = convertImplications(self.formula)
         convertFormula.run()
         self.createTableHeadings()
@@ -194,6 +184,17 @@ class createTruthTable:
         table.extend(self.createRows())
         # print(table)
         return table
+
+class TruthTableErrors(Exception):
+    """ Errors for truth table generator """
+    pass
+
+
+class QuestionWrongFormat(TruthTableErrors):
+    """ Raised when question has wrong format """
+    pass
+
+
         
 
 class ReadFile:
@@ -208,15 +209,7 @@ class ReadFile:
 
 # ((NOT A) OR B) <-> ((B OR C) -> D)
 
-truthTable = createTruthTable("((NOT A) OR B) <-> C")
-truthTable.run()
 
-# print(bin(1)[2:].zfill(2))
-
-# numRows = 8
-# for i in range(numRows):
-#     binary  = bin(i)[2:].zfill(2)
-#     print(binary)
-#string = "a or b"
-
-#print(int(eval(string, {"a": 0, "b" : 1, "not" : "~", "and": "&", "or": "|"})))
+if __name__ == "__main__":
+    truthTable = createTruthTable("((NOT A) OR B) <-> C")
+    truthTable.run()

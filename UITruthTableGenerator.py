@@ -103,9 +103,14 @@ class TTFWindow(QDialog):
 
     def showTTF(self):
         print(self.textEditor.text())
-        table = main.createTruthTable(str(self.textEditor.text()))
-        newTable = table.run()
-        print(newTable)
+        try:
+            table = main.createTruthTable(str(self.textEditor.text()))
+            newTable = table.run()
+            print(newTable)
+        except main.QuestionWrongFormat:
+            print("Question is of wrong format")
+            newTable = []
+            pass
 
         self.setupTable(newTable, 0, 0)
 
