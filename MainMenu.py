@@ -8,6 +8,7 @@ from PyQt5.QtGui import QColor, QFont
 from PyQt5.QtWidgets import QFileDialog, QLabel
 import UITruthTableGenerator
 import revisionCards
+import Quiz
 
 class Window(QtWidgets.QMainWindow):
     def __init__(self):
@@ -42,10 +43,17 @@ class Window(QtWidgets.QMainWindow):
 
         fileChooser = QtWidgets.QPushButton(self)
         fileChooser.clicked.connect(self.getfile)
-        fileChooser.resize(300, 300)
-        fileChooser.move(800, 180)
+        fileChooser.resize(300, 100)
+        fileChooser.move(450, 500)
         fileChooser.setToolTip("<h3>Create Exercise</h3>")
         fileChooser.setStyleSheet("background-image: url('ExerciseButton.png'); border: none;")
+
+        quizButton = QtWidgets.QPushButton(self)
+        quizButton.clicked.connect(self.showQuizFrame)
+        quizButton.resize(300, 300)
+        quizButton.move(800, 180)
+        quizButton.setToolTip("<h3>Create Exercise</h3>")
+        quizButton.setStyleSheet("background-image: url('QUIZIcon.py.png'); border: none;")
 
         self.show()
 
@@ -60,6 +68,10 @@ class Window(QtWidgets.QMainWindow):
     def showRevCardsFrame(self):
         self.RevCards = revisionCards.RevCards()
         self.RevCards.show()
+
+    def showQuizFrame(self):
+        self.quiz = Quiz.QuizWindow()
+        self.quiz.show()
 
 def run():
     app = QtWidgets.QApplication(sys.argv)
