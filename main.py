@@ -207,7 +207,6 @@ class WrongFileFormat(TruthTableErrors):
     pass
 
         
-
 class CheckFile:
     def __init__(self, filename):
         self.filename = filename
@@ -266,13 +265,13 @@ class GenerateQuestions:
 
     def run(self):
         self.addQuestions()
-        self.getQuestion()
+        randomQuestion = self.getQuestion()
+        return randomQuestion
 
 # ((NOT A) OR B) <-> ((B OR C) -> D)
 
-
 if __name__ == "__main__":
-    truthTable = createTruthTable("((NOT A) OR B) <-> C")
-    print(truthTable.run())
-    #read  = CheckFile("test.txt")
-    #print(read.run())
+    #truthTable = createTruthTable("((NOT A) OR B) <-> C")
+    #print(truthTable.run())
+    read  = GenerateQuestions("test.txt")
+    print(read.run())
