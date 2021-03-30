@@ -142,11 +142,10 @@ class QuizWindow(QDialog):
         for row in range(0, len(CorrectTable)):
             rowVal = []
             for colVal in range(0, len(CorrectTable[row])):
-                value = (self.table.item(row, colVal)).text()
-                # if value is not None:
-                #     value
-                # else:
-                #     print("null")
+                if self.table.item(row, colVal) is None:
+                    value = " "
+                else:
+                    value = (self.table.item(row, colVal)).text()
                 rowVal.append(value)
             userEntry.append(rowVal)
         print(userEntry)
