@@ -1,6 +1,10 @@
+import sys
+
 from PyQt5 import QtWidgets
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
+
+# import MainMenu
 import main
 
 class QuizWindow(QDialog):
@@ -13,7 +17,7 @@ class QuizWindow(QDialog):
         self.vbox = QGridLayout()
         self.setPalette(background)
         self.table = QTableWidget()
-        self.equation = "NOT A"  # function(random)
+        self.equation = str(main.GenerateQuestions("test.txt").run()) # "NOT A"  # function(random)
         self.widgets()
         self.show()
 
@@ -25,7 +29,7 @@ class QuizWindow(QDialog):
         space.adjustSize()
         self.vbox.addWidget(space, 1, 0)
         title = QLabel("Quiz Mode", self)
-        title.move(400, 30)
+        title.move(470, 30)
         title.setFont(QFont('Times', 20))
         title.setStyleSheet("color: white;")
         title.adjustSize()
@@ -63,6 +67,12 @@ class QuizWindow(QDialog):
         returnButton.setStyleSheet(""
                                    "QPushButton { background-image: url('return.png'); border: none; }"
                                    "QToolTip { color: #000000; background-color:#ffffff ; border: 0px; }")
+
+        nextQ = QPushButton('New Question', self)
+        nextQ.clicked.connect(self.nextQuestion)
+        nextQ.resize(100, 100)
+        nextQ.setStyleSheet('background-color: white')
+        self.vbox.addWidget(nextQ, 2, 2)
 
         gap = QLabel("           ", self)
         gap.setFont(QFont('Times', 20))
@@ -133,30 +143,50 @@ class QuizWindow(QDialog):
         for row in range(0, len(CorrectTable)):
             rowVal = []
             for colVal in range(0, len(CorrectTable[row])):
-                # table.setItem(row, colVal, QTableWidgetItem(str(tableVals[row][colVal])))
-                # print((self.table.item(row, colVal)))
                 value = (self.table.item(row, colVal)).text()
-                print(value)
+                # if value is not None:
+                #     value
+                # else:
+                #     print("null")
                 rowVal.append(value)
-                # userEntry.append(value)
             userEntry.append(rowVal)
-        print(sorted(userEntry))
-        print(sorted(CorrectTable))
-
+        print(userEntry)
+        print(CorrectTable)
         if sorted(userEntry) == sorted(CorrectTable):
-            print("correct")
             self._createStatusBar("CORRECT!")
         else:
-            print("INCORRECT")
             self._createStatusBar("INCORRECT. Try Again.")
+            self.showAnswerPopUp()
+
 
     def _createStatusBar(self, message):
         self.statusbar = QStatusBar()
-        # self.setStatusBar(self.statusbar)
         self.statusbar.move(100, 580)
+        self.statusbar.setFont(QFont('Times', 20))
+        self.statusbar.setStyleSheet('color: white')
         self.statusbar.showMessage(message, 4000)
         self.vbox.addWidget(self.statusbar, 5, 1)
-        # self.show()
+
+    def nextQuestion(self):
+        self.equation = str(main.GenerateQuestions("test.txt").run())
+        # MainMenu.showQuizFrame()
+        # self.widgets()
+        self.hide()
+        quiz = QuizWindow()
+        quiz.show()
+        print("pressed")
+
+    def showAnswerPopUp(self):
+        choice = QMessageBox.question(self, 'Show Answer',
+                                      "Would you like to show the correct answer?",
+                                      QMessageBox.Yes | QMessageBox.No)
+        if choice == QMessageBox.Yes:
+            tableValues = main.createTruthTable(self.equation)
+            correctTable = tableValues.run()
+            self.setupTable(correctTable, len(correctTable), len(correctTable[0]))
+        else:
+            pass
+
 
     def returnMainMenu(self):
         print("return")
