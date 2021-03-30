@@ -63,11 +63,15 @@ class QuizWindow(QDialog):
                                    "QPushButton { background-image: url('return.png'); border: none; }"
                                    "QToolTip { color: #000000; background-color:#ffffff ; border: 0px; }")
 
-        nextQ = QPushButton('New Question', self)
+        nextQ = QPushButton(self)
         nextQ.clicked.connect(self.nextQuestion)
         nextQ.resize(100, 100)
-        nextQ.setStyleSheet('background-color: white')
-        self.vbox.addWidget(nextQ, 2, 2)
+        nextQ.move(1080, 100)
+        nextQ.setToolTip("<h3>New Question</h3>")
+        nextQ.setStyleSheet(""
+                            "QPushButton { background-image: url('newq.png'); border: none; }"
+                            "QToolTip { color: #000000; background-color:#ffffff ; border: 0px; }")
+        # self.vbox.addWidget(nextQ, 2, 2)
 
         gap = QLabel("           ", self)
         gap.setFont(QFont('Times', 20))
