@@ -1,4 +1,3 @@
-import sys
 from PyQt5 import QtCore
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
@@ -12,13 +11,8 @@ class RevCards(QMainWindow):
         backGround = self.palette()
         backGround.setColor(self.backgroundRole(), QColor(15, 102, 102))
         self.setPalette(backGround)
-        #self.setMenuWidget(self.returnButton())
         self.table_widget = MyTableWidget(self)
         self.setCentralWidget(self.table_widget)
-        # self.menuWidget = QWidget(self)
-        # self.menuWidgetLayout = QGridLayout(self.menuWidget)
-        # self.menuWidget.setLayout(self.menuWidgetLayout)
-        # #self.menuWidgetLayout.addWidget(self.returnButton(), 1180, 680, 1, 1)
         self.returnButton()
         self.show()
 
@@ -34,8 +28,6 @@ class RevCards(QMainWindow):
 
     def returnMainMenu(self):
         print("return")
-        # self.MainMenu = pyQt.Window()
-        # self.MainMenu.show()
         self.hide()
 
 class MyTableWidget(QWidget):
@@ -43,7 +35,6 @@ class MyTableWidget(QWidget):
         super(QWidget, self).__init__(parent)
         self.layout = QVBoxLayout(self)
 
-        # Initialize tab screen
         self.tabs = QTabWidget()
         self.tab1 = QWidget()
         self.tab2 = QWidget()
@@ -52,14 +43,12 @@ class MyTableWidget(QWidget):
         self.tab5 = QWidget()
         self.tabs.resize(0, 0)
 
-        # Add tabs
         self.tabs.addTab(self.tab1, "A OR B")
         self.tabs.addTab(self.tab2, "A AND B")
         self.tabs.addTab(self.tab3, "A -> B")
         self.tabs.addTab(self.tab4, "A <-> B")
         self.tabs.addTab(self.tab5, "NOT A")
 
-        # Create first tab
         self.tab1.layout = QVBoxLayout(self)
         self.label = QLabel(self)
         pixmap = QPixmap('AORB.png')
@@ -105,12 +94,5 @@ class MyTableWidget(QWidget):
         self.tab5.layout.addWidget(self.label)
         self.tab5.setLayout(self.tab5.layout)
 
-        # Add tabs to widget
         self.layout.addWidget(self.tabs)
         self.setLayout(self.layout)
-
-#
-# if __name__ == '__main__':
-#     app = QApplication(sys.argv)
-#     ex = RevCards()
-#     sys.exit(app.exec_())

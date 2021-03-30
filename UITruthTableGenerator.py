@@ -14,6 +14,8 @@ class TTFWindow(QDialog):
         self.setPalette(backGround)
         self.table = QTableWidget()
         self.textEditor = QLineEdit(self)
+        self.equationLabel = QLabel('Equation:', self)
+        self.Label = QLabel('            ', self)
         self.widgets()
         self.show()
 
@@ -32,13 +34,11 @@ class TTFWindow(QDialog):
         title.setStyleSheet("color: white;")
         title.adjustSize()
 
-        self.equationLabel = QLabel('Equation:', self)
         self.equationLabel.move(245, 132)
         self.equationLabel.setFont(QFont('Times', 12))
         self.equationLabel.setStyleSheet("color: white;")
         vbox.addWidget(self.equationLabel, 2, 0)
 
-        self.Label = QLabel('            ', self)
         self.Label.setFont(QFont('Times', 12))
         self.Label.setStyleSheet("color: white;")
         vbox.addWidget(self.Label, 2, 2)
@@ -78,20 +78,7 @@ class TTFWindow(QDialog):
         print(self.textEditor.text())
         table = main.createTruthTable(str(self.textEditor.text()))
         newTable = table.run()
-
         self.setupTable(newTable, 0, 0)
-
-    # def _createStatusBar(self):
-    #     self.statusbar = QStatusBar()
-    #     self.setStatusBar(self.statusbar)
-    #     self.statusbar.move(100, 580)
-    #     self.statusbar.showMessage("Invalid Entry", 3000)
-
-    # def getTableData(self):
-    #     # table = main.createTruthTable('A OR B')
-    #     # print(table)
-    #     table = [] # [['A', 'B', 'A OR B'], [0, 0, 0], [0, 1, 1], [1, 0, 1], [1, 1, 1]]
-    #     return table
 
     def setupTable(self, tableVals, rows, columns):
         self.table.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)
@@ -104,18 +91,11 @@ class TTFWindow(QDialog):
         else:
             self.table.setRowCount(len(tableVals))
             self.table.setColumnCount(len(tableVals[0]))
-            # tableValues = self.getTableData()
             for row in range(0, len(tableVals)):
                 for colVal in range(0, len(tableVals[row])):
                     self.table.setItem(row, colVal, QTableWidgetItem(str(tableVals[row][colVal])))
-                    #print(tableVals[row][colVal])
-                    # print((table.item(row, colVal)).text())
         return self.table
 
     def returnMainMenu(self):
         print("return")
-        # self.MainMenu = pyQt.Window()
-        # self.MainMenu.show()
         self.hide()
-
-

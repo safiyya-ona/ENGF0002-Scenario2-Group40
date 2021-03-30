@@ -18,6 +18,7 @@ class Window(QtWidgets.QMainWindow):
         self.setWindowTitle("Welcome to Truth Tables don't lie")
         backGround = self.palette()
         backGround.setColor(self.backgroundRole(), QColor(15, 102, 102))
+        self.TTOButton = QtWidgets.QPushButton(self)
         self.setPalette(backGround)
         self.widgets()
 
@@ -28,7 +29,6 @@ class Window(QtWidgets.QMainWindow):
         title.setStyleSheet("color: white;")
         title.adjustSize()
 
-        self.TTOButton = QtWidgets.QPushButton(self)
         self.TTOButton.clicked.connect(self.showTTF)
         self.TTOButton.resize(300, 300)
         self.TTOButton.move(450, 180)

@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="69d38d44-2a03-4c2a-bba2-206a69fc8f7d" name="Default Changelist" comment="update">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="69d38d44-2a03-4c2a-bba2-206a69fc8f7d" name="Default Changelist" comment="working pop ups">
+      <change beforePath="$PROJECT_DIR$/MainMenu.py" beforeDir="false" afterPath="$PROJECT_DIR$/MainMenu.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Quiz.py" beforeDir="false" afterPath="$PROJECT_DIR$/Quiz.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UI.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UITruthTableGenerator.py" beforeDir="false" afterPath="$PROJECT_DIR$/UITruthTableGenerator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/revisionCards.py" beforeDir="false" afterPath="$PROJECT_DIR$/revisionCards.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,7 +119,14 @@
       <option name="project" value="LOCAL" />
       <updated>1617049663627</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="working pop ups">
+      <created>1617101097856</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1617101097856</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -135,6 +145,7 @@
     <MESSAGE value="first push" />
     <MESSAGE value="working table show" />
     <MESSAGE value="update" />
-    <option name="LAST_COMMIT_MESSAGE" value="update" />
+    <MESSAGE value="working pop ups" />
+    <option name="LAST_COMMIT_MESSAGE" value="working pop ups" />
   </component>
 </project>

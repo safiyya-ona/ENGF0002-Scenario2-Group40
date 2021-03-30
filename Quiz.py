@@ -1,10 +1,6 @@
-import sys
-
 from PyQt5 import QtWidgets
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-
-# import MainMenu
 import main
 
 class QuizWindow(QDialog):
@@ -17,7 +13,9 @@ class QuizWindow(QDialog):
         self.vbox = QGridLayout()
         self.setPalette(background)
         self.table = QTableWidget()
-        self.equation = str(main.GenerateQuestions("test.txt").run()) # "NOT A"  # function(random)
+        self.questionLabel = QLabel(self)
+        self.equationLabel = QLabel(self)
+        self.equation = str(main.GenerateQuestions("test.txt").run())
         self.widgets()
         self.show()
 
@@ -34,15 +32,12 @@ class QuizWindow(QDialog):
         title.setStyleSheet("color: white;")
         title.adjustSize()
 
-        self.questionLabel = QLabel(self)
-        equation = "QUESTION: " # function(random)
+        equation = "QUESTION: "
         self.questionLabel.setText(equation)
         self.questionLabel.move(245, 132)
         self.questionLabel.setFont(QFont('Times', 12))
         self.questionLabel.setStyleSheet("color: white;")
         self.vbox.addWidget(self.questionLabel, 2, 0)
-
-        self.equationLabel = QLabel(self)
 
         self.equationLabel.setText(self.equation)
         self.equationLabel.move(245, 132)
@@ -56,8 +51,8 @@ class QuizWindow(QDialog):
         check.move(1080, 580)
         check.setToolTip("<h3>Show Answer</h3>")
         check.setStyleSheet(""
-                           "QPushButton { background-image: url('CHECK.png'); border: none; }"
-                           "QToolTip { color: #000000; background-color:#ffffff ; border: 0px; }")
+                            "QPushButton { background-image: url('CHECK.png'); border: none; }"
+                            "QToolTip { color: #000000; background-color:#ffffff ; border: 0px; }")
 
         returnButton = QPushButton('', self)
         returnButton.clicked.connect(self.returnMainMenu)
@@ -158,7 +153,6 @@ class QuizWindow(QDialog):
             self._createStatusBar("INCORRECT. Try Again.")
             self.showAnswerPopUp()
 
-
     def _createStatusBar(self, message):
         self.statusbar = QStatusBar()
         self.statusbar.move(100, 580)
@@ -186,7 +180,6 @@ class QuizWindow(QDialog):
             self.setupTable(correctTable, len(correctTable), len(correctTable[0]))
         else:
             pass
-
 
     def returnMainMenu(self):
         print("return")
