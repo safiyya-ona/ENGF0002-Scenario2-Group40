@@ -71,7 +71,6 @@ class QuizWindow(QDialog):
         nextQ.setStyleSheet(""
                             "QPushButton { background-image: url('newq.png'); border: none; }"
                             "QToolTip { color: #000000; background-color:#ffffff ; border: 0px; }")
-        # self.vbox.addWidget(nextQ, 2, 2)
 
         gap = QLabel("           ", self)
         gap.setFont(QFont('Times', 20))
@@ -81,9 +80,6 @@ class QuizWindow(QDialog):
 
         rows = self.returnRows(self.equation)
         columns = self.returnColumns(self.equation)
-        # firstRow =  self.headings(equation)
-        # table = []
-        # table.append(firstRow)
         self.table = self.setupTable([], rows, columns)
         self.table = self.headings(self.equation)
         self.vbox.addWidget(self.table, 3, 1)
@@ -118,24 +114,12 @@ class QuizWindow(QDialog):
         else:
             self.table.setRowCount(len(tableVals))
             self.table.setColumnCount(len(tableVals[0]))
-            # tableValues = self.getTableData()
             for row in range(0, len(tableVals)):
                 for colVal in range(0, len(tableVals[row])):
                     self.table.setItem(row, colVal, QTableWidgetItem(str(tableVals[row][colVal])))
-                    # print(tableVals[row][colVal])
-                    # print((table.item(row, colVal)).text())
         return self.table
 
-    def adjustTable(self):
-        # https://stackoverflow.com/questions/21945044/wait-for-last-character-typed-in-qlineeditontextchanged
-        rows = main.createTruthTable(str(self.textEditor.text())).numberOfRows
-        print(rows)
-        columns = main.createTruthTable(self.textEditor.text()).numberOfColumns
-        print(columns)
-        self.setupTable([], rows, columns)
-
     def checkTable(self):
-        # self.setupTable()
         userEntry = []
         tableValues = main.createTruthTable(self.equation)
         CorrectTable = tableValues.run()
@@ -166,8 +150,6 @@ class QuizWindow(QDialog):
 
     def nextQuestion(self):
         self.equation = str(main.GenerateQuestions("test.txt").run())
-        # MainMenu.showQuizFrame()
-        # self.widgets()
         self.hide()
         quiz = QuizWindow()
         quiz.show()

@@ -1,4 +1,3 @@
-# https://www.youtube.com/watch?v=ECIZgWeyFFk&ab_channel=ParwizForogh
 from PyQt5 import QtWidgets
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
@@ -16,17 +15,18 @@ class TTFWindow(QDialog):
         self.textEditor = QLineEdit(self)
         self.equationLabel = QLabel('Equation:', self)
         self.Label = QLabel('            ', self)
+        self.vbox = QGridLayout()
         self.widgets()
         self.show()
 
     def widgets(self):
-        vbox = QGridLayout()
-        vbox.setSpacing(20)
+
+        self.vbox.setSpacing(20)
         space = QLabel("     ", self)
         space.setFont(QFont('Times', 20))
         space.setStyleSheet("color: white;")
         space.adjustSize()
-        vbox.addWidget(space, 1, 0)
+        self.vbox.addWidget(space, 1, 0)
 
         title = QLabel("Truth Table Filler", self)
         title.move(400, 30)
@@ -37,21 +37,21 @@ class TTFWindow(QDialog):
         self.equationLabel.move(245, 132)
         self.equationLabel.setFont(QFont('Times', 12))
         self.equationLabel.setStyleSheet("color: white;")
-        vbox.addWidget(self.equationLabel, 2, 0)
+        self.vbox.addWidget(self.equationLabel, 2, 0)
 
         self.Label.setFont(QFont('Times', 12))
         self.Label.setStyleSheet("color: white;")
-        vbox.addWidget(self.Label, 2, 2)
+        self.vbox.addWidget(self.Label, 2, 2)
 
         self.textEditor.move(350, 130)
         self.textEditor.resize(400, 70)
-        vbox.addWidget(self.textEditor, 2, 1)
+        self.vbox.addWidget(self.textEditor, 2, 1)
 
         gap = QLabel("     ", self)
         gap.setFont(QFont('Times', 20))
         gap.setStyleSheet("color: white;")
         gap.adjustSize()
-        vbox.addWidget(gap, 5, 2)
+        self.vbox.addWidget(gap, 5, 2)
 
         show = QPushButton(' ', self)
         show.clicked.connect(self.showTTF)
@@ -71,14 +71,24 @@ class TTFWindow(QDialog):
                                    "QPushButton { background-image: url('return.png'); border: none; }"
                                    "QToolTip { color: #000000; background-color:#ffffff ; border: 0px; }")
         self.table = self.setupTable([], 5, 3)
-        vbox.addWidget(self.table, 3, 1)
-        self.setLayout(vbox)
+        self.vbox.addWidget(self.table, 3, 1)
+        self.setLayout(self.vbox)
 
     def showTTF(self):
-        print(self.textEditor.text())
-        table = main.createTruthTable(str(self.textEditor.text()))
-        newTable = table.run()
-        self.setupTable(newTable, 0, 0)
+        try:
+            table = main.createTruthTable(str(self.textEditor.text()))
+            newTable = table.run()
+            self.setupTable(newTable, 0, 0)
+        except:
+            self._createStatusBar("Please enter an equation")
+
+    def _createStatusBar(self, message):
+        self.statusbar = QStatusBar()
+        self.statusbar.move(100, 580)
+        self.statusbar.setFont(QFont('Times', 15))
+        self.statusbar.setStyleSheet('color: white')
+        self.statusbar.showMessage(message, 4000)
+        self.vbox.addWidget(self.statusbar, 5, 1)
 
     def setupTable(self, tableVals, rows, columns):
         self.table.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.Stretch)

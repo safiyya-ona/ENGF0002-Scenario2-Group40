@@ -1,7 +1,3 @@
-# https://www.learnpyqt.com/tutorials/qtableview-modelviews-numpy-pandas/
-# https://www.youtube.com/watch?v=dRRpbDFnMHI&ab_channel=Ssj6
-# https://stackoverflow.com/questions/56989216/switching-frames-in-pyqt
-# https://www.tutorialspoint.com/pyqt/pyqt_qfiledialog_widget.htm
 import sys
 from PyQt5 import QtWidgets
 from PyQt5.QtGui import QColor, QFont
