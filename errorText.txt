@@ -1,0 +1,6 @@
+5
+(A OR B AND (A OR C)
+(A OR B) -> C
+(A OR B) <-> NOT(C OR D)
+(A OR D) AND (C OR B) AND (A OR (B AND C))
+NOT A

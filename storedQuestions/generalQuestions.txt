@@ -1,0 +1,15 @@
+14
+NOT A
+A OR B
+A AND B AND C
+A -> D
+(D <-> B)
+NOT A AND NOT B
+NOT A <-> NOT B
+A -> (B -> C)
+C -> A AND NOT (B -> C)
+(A OR B) AND (A OR C)
+(A OR B) -> C
+(A OR B) <-> NOT(C OR D)
+(A OR D) AND (C OR B) AND (A OR (B AND C))
+NOT A
