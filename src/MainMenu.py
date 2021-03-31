@@ -1,7 +1,7 @@
 import sys
 from PyQt5 import QtWidgets
 from PyQt5.QtGui import QColor, QFont
-from PyQt5.QtWidgets import QFileDialog, QLabel
+from PyQt5.QtWidgets import QFileDialog, QLabel, QErrorMessage, QMessageBox
 import UITruthTableGenerator
 import revisionCards
 import Quiz
@@ -55,15 +55,29 @@ class Window(QtWidgets.QMainWindow):
         self.show()
 
     def getfile(self):
-        fileName = QFileDialog.getOpenFileName(self, 'Open file', 'c:\\', "Text files (*.txt)")
-        try:
-            file = main.CheckFile(fileName[0])
-            file.checkQuestionFormats()
-        except main.WrongFileFormat:
-            pass
+        fileName = QFileDialog.getOpenFileName(self, 'Open file', '../', "Text files (*.txt)")
+        print(fileName)
+        if not fileName[0]:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Critical)
+            msg.setText("Error")
+            msg.setInformativeText('No file selected')
+            msg.setWindowTitle("Error")
+            msg.exec_()
+        else:
+            try:
+                file = main.addQuestions(fileName[0])
+                file.run()
 
-        print(fileName[0])
-
+            except:
+                msg = QMessageBox()
+                msg.setIcon(QMessageBox.Critical)
+                msg.setText("Error")
+                msg.setInformativeText('Formula found in incorrect format')
+                msg.setWindowTitle("Error")
+                msg.exec_()
+                pass
+        
     def showTTF(self):
         self.TTF = UITruthTableGenerator.TTFWindow()
         self.TTF.show()

@@ -249,24 +249,71 @@ class GenerateQuestions:
         self.questionDatabase = list()
         self.numQuestions = 0
 
+    
+
     def addQuestions(self):
         # reads number of questions
         inputFile = open(self.filename, "r")
-        line1 = inputFile.readline().strip().split(" ")
+        questions = inputFile.readlines()
+        line1 = questions.pop(0).strip().split(" ")
         self.numQuestions = int(line1[0])
         #reads each question and adds to list
-        for i in range(self.numQuestions):
-            line = inputFile.readline().strip()
+        for i in questions:
+            line = i.strip()
             self.questionDatabase.append(line)
 
     def getQuestion(self):
         number = random.randint(0, self.numQuestions-1)
-        return self.questionDatabase[number]
+        return random.choice(self.questionDatabase)
 
     def run(self):
         self.addQuestions()
         randomQuestion = self.getQuestion()
         return randomQuestion
+
+
+class addQuestions:
+    def __init__(self, filename):
+        self.filename = filename
+        self.questionDatabase = list()
+        
+
+    def checkQuestionFormats(self):
+        # reads number of questions
+        inputFile = open(self.filename, "r")
+        line1 = inputFile.readline().strip().split(" ")
+        numQuestions = int(line1[0])
+        self.lines = list()
+        #reads each question and checks
+        for i in range(numQuestions):
+            line = inputFile.readline().strip()
+            newQuestion = checkExpression(line)
+            if not newQuestion.run():
+                raise WrongFileFormat
+            self.lines.append(line)
+            
+    def run(self):
+        check = self.checkQuestionFormats()
+        previousQuestions = []
+        with open("../storedQuestions/generalQuestions.txt", "r") as generalQuestions:
+            previousQuestions = generalQuestions.readlines()
+        updatedNumQuestions = int(previousQuestions[0].strip()) + len(self.lines)
+        previousQuestions[0] = str(updatedNumQuestions) + "\n"
+
+        with open("../storedQuestions/generalQuestions.txt", "w") as generalQuestions:
+            for line in previousQuestions:
+                generalQuestions.write(line)
+
+        with open("../storedQuestions/generalQuestions.txt", "a+") as allquestions:
+            for line in self.lines:
+                allquestions.write(line + "\n")
+                print(line)
+            allquestions.close()
+
+
+
+
+        
 
 # ((NOT A) OR B) <-> ((B OR C) -> D)
 

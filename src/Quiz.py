@@ -15,7 +15,7 @@ class QuizWindow(QDialog):
         self.table = QTableWidget()
         self.questionLabel = QLabel(self)
         self.equationLabel = QLabel(self)
-        self.equation = str(main.GenerateQuestions("test.txt").run())
+        self.equation = str(main.GenerateQuestions("../storedQuestions/generalQuestions.txt").run())
         self.widgets()
         self.show()
 
@@ -149,7 +149,7 @@ class QuizWindow(QDialog):
         self.vbox.addWidget(self.statusbar, 5, 1)
 
     def nextQuestion(self):
-        self.equation = str(main.GenerateQuestions("test.txt").run())
+        self.equation = str(main.GenerateQuestions("../storedQuestions/generalQuestions.txt").run())
         self.hide()
         quiz = QuizWindow()
         quiz.show()
